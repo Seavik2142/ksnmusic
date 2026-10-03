@@ -1,0 +1,32 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`themeCard.vue > renders 1`] = `
+<article data-v-a32b02e1="" title="Set current theme to Sample" class="theme group relative flex flex-col rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 border shadow-md border-white/10 hover:border-white/30 hover:shadow-xl hover:-translate-y-1 bg-k-bg-secondary/40" data-testid="theme-card">
+  <div data-v-07fc2ee9="" data-v-a32b02e1="" class="gradient-border relative overflow-hidden h-full rounded-[inherit] flex flex-col"><button data-v-a32b02e1="" class="w-full text-left flex flex-col focus:outline-none focus-visible:ring-2 focus-visible:ring-k-highlight rounded-[inherit]" type="button" aria-label="Sample">
+      <!-- Mock UI Theme Preview Canvas -->
+      <div data-v-a32b02e1="" class="thumbnail relative h-[106px] w-full bg-center bg-cover overflow-hidden flex flex-col justify-between p-3 select-none">
+        <!-- Glass sheen and ambient shadow overlay -->
+        <div data-v-a32b02e1="" class="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-black/60 pointer-events-none"></div><!-- Top row in preview: mini window controls & active badge / preview hint -->
+        <div data-v-a32b02e1="" class="relative z-10 flex items-center justify-between w-full">
+          <!-- Mini window indicator dots -->
+          <div data-v-a32b02e1="" class="flex items-center gap-1.5 opacity-80"><span data-v-a32b02e1="" class="w-2 h-2 rounded-full bg-white/20"></span><span data-v-a32b02e1="" class="w-2 h-2 rounded-full bg-white/20"></span><span data-v-a32b02e1="" class="w-2 h-2 rounded-full bg-white/20"></span>
+            <!--v-if-->
+          </div><!-- Active Badge or Hover Action -->
+          <div data-v-a32b02e1=""><span data-v-a32b02e1="" class="opacity-0 group-hover:opacity-100 transition-all duration-200 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium text-white/95 bg-black/60 backdrop-blur-md border border-white/10 shadow-sm"> Apply </span></div>
+        </div><!-- Bottom row in preview: Mini KSN Music player layout representation -->
+        <div data-v-a32b02e1="" class="relative z-10 flex items-end justify-between w-full mt-auto">
+          <!-- Mini track snippet -->
+          <div data-v-a32b02e1="" class="flex items-center gap-2 bg-black/45 backdrop-blur-xs px-2.5 py-1.5 rounded-lg border border-white/10 max-w-[70%]">
+            <div data-v-a32b02e1="" class="theme-highlight-bg w-5 h-5 rounded shrink-0 flex items-center justify-center text-[10px] text-white font-black"> K </div>
+            <div data-v-a32b02e1="" class="flex flex-col gap-1 min-w-0"><span data-v-a32b02e1="" class="w-14 h-1.5 rounded-full bg-white/80 block"></span><span data-v-a32b02e1="" class="w-9 h-1 rounded-full bg-white/40 block"></span></div>
+          </div><!-- Mini dynamic sound equalizer bars -->
+          <div data-v-a32b02e1="" class="flex items-end gap-0.5 h-4.5 px-1.5 py-1 bg-black/45 backdrop-blur-xs rounded-md border border-white/10"><span data-v-a32b02e1="" class="theme-highlight-bg w-1 rounded-full transition-all duration-300 group-hover:animate-eq-1 h-2"></span><span data-v-a32b02e1="" class="theme-highlight-bg w-1 rounded-full transition-all duration-300 group-hover:animate-eq-2 h-3.5"></span><span data-v-a32b02e1="" class="theme-highlight-bg w-1 rounded-full transition-all duration-300 group-hover:animate-eq-3 h-1.5"></span><span data-v-a32b02e1="" class="theme-highlight-bg w-1 rounded-full transition-all duration-300 group-hover:animate-eq-4 h-3"></span></div>
+        </div>
+      </div><!-- Meta Footer: Theme Name & Color Swatches -->
+      <div data-v-a32b02e1="" class="p-3.5 bg-black/35 backdrop-blur-md border-t border-white/5 flex items-center justify-between gap-3 w-full">
+        <div data-v-a32b02e1="" class="flex flex-col min-w-0"><span data-v-a32b02e1="" class="theme-name font-semibold text-sm text-k-fg group-hover:text-k-highlight transition-colors truncate tracking-wide">Sample</span><span data-v-a32b02e1="" class="text-[11px] text-k-text-secondary">Custom Theme</span></div><!-- Color Swatch Dots -->
+        <div data-v-a32b02e1="" class="flex items-center gap-1.5 shrink-0"><span data-v-a32b02e1="" class="theme-base-bg w-3.5 h-3.5 rounded-full border border-white/20 shadow-xs"></span><span data-v-a32b02e1="" class="theme-highlight-bg w-3.5 h-3.5 rounded-full border border-white/20 shadow-xs ring-1 ring-white/10"></span></div>
+      </div>
+    </button></div>
+</article>
+`;

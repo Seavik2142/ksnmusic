@@ -1,0 +1,150 @@
+<?php
+
+namespace App\Services;
+
+use App\Enums\Acl\Role;
+use App\Exceptions\UserProspectUpdateDeniedException;
+use App\Models\Organization;
+use App\Models\User;
+use App\Repositories\UserRepository;
+use App\Services\Image\ImageStorage;
+use App\Values\ImageWritingConfig;
+use App\Values\User\SsoUser;
+use App\Values\User\UserCreateData;
+use App\Values\User\UserUpdateData;
+use Illuminate\Container\Attributes\Config;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use SensitiveParameter;
+
+class UserService
+{
+    public function __construct(
+        private readonly UserRepository $repository,
+        private readonly ImageStorage $imageStorage,
+        private readonly OrganizationService $organizationService,
+        private readonly EmailChangeService $emailChangeService,
+        #[Config('koel.sso.default_role')]
+        private readonly Role $defaultSsoRole = Role::USER,
+    ) {}
+
+    public function createUser(UserCreateData $dto, ?Organization $organization = null): User
+    {
+        $dto->role->assertAvailable();
+
+        $organization ??= $this->organizationService->getCurrentOrganization();
+        $data = $dto->toArray();
+        $data['avatar'] = $dto->avatar ? $this->maybeStoreAvatar($dto->avatar) : null;
+
+        /** @var User $user */
+        $user = $organization->users()->create($data);
+
+        $organization->claimOwnership($user);
+
+        return $user->syncRoles($dto->role);
+    }
+
+    public function createOrUpdateUserFromSso(SsoUser $ssoUser): User
+    {
+        $existingUser = $this->repository->findOneBySso($ssoUser);
+
+        if ($existingUser) {
+            $existingUser->update([
+                'avatar' => $existingUser->has_custom_avatar ? $existingUser->avatar : $ssoUser->avatar,
+                'sso_id' => $ssoUser->id,
+                'sso_provider' => $ssoUser->provider,
+            ]);
+
+            return $existingUser;
+        }
+
+        return $this->createUser(UserCreateData::fromSsoUser($ssoUser, $this->defaultSsoRole));
+    }
+
+    public function changePassword(User $user, #[SensitiveParameter] string $newPassword): void
+    {
+        $user->password = $newPassword;
+        $user->save();
+    }
+
+    public function updateUser(User $user, UserUpdateData $dto): User
+    {
+        $previousEmail = $user->email;
+
+        $this->applyUpdate($user, $dto, keepCurrentEmail: false);
+
+        if ($user->email !== $previousEmail) {
+            $this->emailChangeService->notifyChange($user, $previousEmail);
+        }
+
+        return $user->refresh(); // make sure the roles and permissions are refreshed
+    }
+
+    public function updateOwnProfile(User $user, UserUpdateData $dto): User
+    {
+        $emailChangeRequiresConfirmation = $this->emailChangeService->requiresConfirmation($user, $dto->email);
+
+        $this->applyUpdate($user, $dto, keepCurrentEmail: $emailChangeRequiresConfirmation);
+
+        if ($emailChangeRequiresConfirmation) {
+            $this->emailChangeService->requestChange($user, $dto->email);
+        }
+
+        return $user->refresh(); // make sure the roles and permissions are refreshed
+    }
+
+    private function applyUpdate(User $user, UserUpdateData $dto, bool $keepCurrentEmail): void
+    {
+        throw_if($user->is_prospect, new UserProspectUpdateDeniedException());
+        $dto->role?->assertAvailable();
+
+        $data = [
+            'name' => $dto->name,
+            'email' => $dto->email,
+            'password' => $dto->password ?? $user->password,
+        ];
+
+        if ($dto->avatar) {
+            $data['avatar'] = $dto->avatar->image ? $this->maybeStoreAvatar($dto->avatar->image) : null;
+        }
+
+        if ($user->sso_provider) {
+            // SSO users cannot change their password or email
+            Arr::forget($data, ['password', 'email']);
+        }
+
+        if ($keepCurrentEmail) {
+            Arr::forget($data, 'email');
+        }
+
+        $user->update($data);
+
+        if ($dto->role && $user->role !== $dto->role) {
+            $user->syncRoles($dto->role);
+        }
+    }
+
+    /**
+     * @param string $avatar Either the URL of the avatar or image data
+     */
+    private function maybeStoreAvatar(string $avatar): string
+    {
+        if (Str::startsWith($avatar, ['http://', 'https://'])) {
+            return $avatar;
+        }
+
+        return basename($this->imageStorage->storeImage($avatar, ImageWritingConfig::make(maxWidth: 480)));
+    }
+
+    public function deleteUser(User $user): void
+    {
+        $user->delete();
+    }
+
+    public function savePreference(User $user, string $key, mixed $value): void
+    {
+        $user->preferences = $user->preferences->set($key, $value);
+
+        $user->save();
+    }
+}

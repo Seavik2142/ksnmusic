@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+  <defs>
+    <!-- Dawn Sky Gradient -->
+    <linearGradient id="as-sky" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#140803" />
+      <stop offset="35%" stop-color="#2d1205" />
+      <stop offset="65%" stop-color="#6c2205" />
+      <stop offset="85%" stop-color="#c2410c" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </linearGradient>
+
+    <!-- Morning Sun Glow -->
+    <radialGradient id="as-sun" cx="50%" cy="56%" r="42%">
+      <stop offset="0%" stop-color="#fffbeb" stop-opacity="0.95" />
+      <stop offset="20%" stop-color="#fef08a" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#f59e0b" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#9a3412" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Reflection Pool Gradient -->
+    <linearGradient id="as-pond" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#9a3412" />
+      <stop offset="25%" stop-color="#431407" />
+      <stop offset="70%" stop-color="#1c0902" />
+      <stop offset="100%" stop-color="#0c0401" />
+    </linearGradient>
+  </defs>
+
+  <!-- Sky Canvas -->
+  <rect width="1600" height="900" fill="url(#as-sky)" />
+
+  <!-- Rising Sun behind Angkor Wat -->
+  <circle cx="800" cy="510" r="380" fill="url(#as-sun)" />
+
+  <!-- Sunrise Radiance Beams -->
+  <g opacity="0.15" fill="#fef08a">
+    <polygon points="800,510 300,0 380,0" />
+    <polygon points="800,510 520,0 600,0" />
+    <polygon points="800,510 740,0 820,0" />
+    <polygon points="800,510 960,0 1040,0" />
+    <polygon points="800,510 1180,0 1260,0" />
+  </g>
+
+  <!-- Angkor Wat Temple Silhouette (Detailed Lotus Bud Towers) -->
+  <g fill="#120602" opacity="0.96">
+    <!-- Center Central Sanctuary (Bakan) Tower -->
+    <path d="M782,320 Q800,190 800,160 Q800,190 818,320 L828,400 L842,470 L855,560 L745,560 L758,470 L772,400 Z" />
+    <!-- Center Tower Crown Finial -->
+    <path d="M794,160 L800,125 L806,160 Z" />
+    <path d="M788,270 L812,270 L810,290 L790,290 Z M782,330 L818,330 L815,355 L785,355 Z" fill="#240c04" />
+
+    <!-- Left Flanking Tower -->
+    <path d="M690,370 Q705,260 705,230 Q705,260 720,370 L730,440 L740,510 L750,560 L660,560 L670,510 L680,440 Z" />
+    <path d="M700,230 L705,200 L710,230 Z" />
+
+    <!-- Right Flanking Tower -->
+    <path d="M880,370 Q895,260 895,230 Q895,260 910,370 L920,440 L930,510 L940,560 L850,560 L860,510 L870,440 Z" />
+    <path d="M890,230 L895,200 L900,230 Z" />
+
+    <!-- Far Left Tower -->
+    <path d="M600,420 Q612,330 612,300 Q612,330 624,420 L632,480 L640,560 L580,560 L590,480 Z" />
+
+    <!-- Far Right Tower -->
+    <path d="M976,420 Q988,330 988,300 Q988,330 1000,420 L1008,480 L1020,560 L960,560 L970,480 Z" />
+
+    <!-- Temple Gallery Base & Causeway -->
+    <polygon points="530,560 1070,560 1110,610 490,610" />
+    <polygon points="450,610 1150,610 1190,670 410,670" />
+    <rect x="360" y="670" width="880" height="35" />
+
+    <!-- Gallery Pillar Silhouettes -->
+    <rect x="540" y="570" width="7" height="35" fill="#240c04" />
+    <rect x="600" y="570" width="7" height="35" fill="#240c04" />
+    <rect x="660" y="570" width="7" height="35" fill="#240c04" />
+    <rect x="720" y="570" width="7" height="35" fill="#240c04" />
+    <rect x="780" y="570" width="7" height="35" fill="#240c04" />
+    <rect x="840" y="570" width="7" height="35" fill="#240c04" />
+    <rect x="900" y="570" width="7" height="35" fill="#240c04" />
+    <rect x="960" y="570" width="7" height="35" fill="#240c04" />
+    <rect x="1020" y="570" width="7" height="35" fill="#240c04" />
+  </g>
+
+  <!-- Reflection Pond (Holy North Pond of Angkor Wat) -->
+  <path d="M0,705 L1600,705 L1600,900 L0,900 Z" fill="url(#as-pond)" />
+
+  <!-- Soft Inverted Silhouette Reflection in the Water -->
+  <g fill="#1a0803" opacity="0.45" transform="scale(1, -0.6) translate(0, -1880)">
+    <path d="M782,320 Q800,190 800,160 Q800,190 818,320 L828,400 L855,560 L745,560 Z" />
+    <path d="M690,370 Q705,260 705,230 Q705,260 720,370 L750,560 L660,560 Z" />
+    <path d="M880,370 Q895,260 895,230 Q895,260 910,370 L940,560 L850,560 Z" />
+  </g>
+
+  <!-- Golden Sunrise Water Shimmer Lines -->
+  <ellipse cx="800" cy="725" rx="340" ry="8" fill="#fef08a" opacity="0.45" />
+  <ellipse cx="800" cy="745" rx="420" ry="9" fill="#f59e0b" opacity="0.35" />
+  <ellipse cx="800" cy="775" rx="510" ry="7" fill="#ea580c" opacity="0.25" />
+  <ellipse cx="800" cy="815" rx="590" ry="6" fill="#f59e0b" opacity="0.2" />
+
+  <!-- Sacred Water Lotus Pads in Pond Foreground -->
+  <ellipse cx="260" cy="820" rx="35" ry="12" fill="#0f0502" />
+  <ellipse cx="320" cy="840" rx="45" ry="14" fill="#0f0502" />
+  <ellipse cx="1320" cy="830" rx="50" ry="15" fill="#0f0502" />
+  <ellipse cx="1390" cy="850" rx="40" ry="13" fill="#0f0502" />
+</svg>

@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`aboutKoelModal.vue > renders 1`] = `
+<div data-v-6b5b01a9="" class="about text-center max-w-[480px] overflow-hidden relative" data-testid="about-koel" tabindex="0">
+  <main data-v-6b5b01a9="" class="p-6">
+    <div data-v-6b5b01a9="" class="mb-4 flex justify-center"><img data-v-6b5b01a9="" alt="Logo" class="inline-block object-contain" src="/resources/assets/img/ksnlogo.svg" width="180"></div>
+    <div data-v-6b5b01a9="" class="current-version">v0.0.0 <span data-v-6b5b01a9="">Community</span> Edition
+      <!--v-if-->
+    </div>
+    <!--v-if-->
+    <p data-v-6b5b01a9="" class="author my-4 text-k-fg-70 text-sm leading-relaxed"> This is created my Team start Up builder from Norton University Manager Mao Seavik - Kea somneang. Contact me if you want about full concept. </p>
+    <!--v-if-->
+  </main>
+  <footer data-v-6b5b01a9=""><button data-v-8943c846="" data-v-6b5b01a9="" data-variant="destructive" class="text-base text-white border border-transparent bg-k-primary px-3.5 py-2 rounded-sm cursor-pointer" type="button" data-testid="close-modal-btn" rounded="">Close</button></footer>
+</div>
+`;
+
+exports[`aboutKoelModal.vue > renders with custom branding 1`] = `
+<div data-v-6b5b01a9="" class="about text-center max-w-[480px] overflow-hidden relative" data-testid="about-koel" tabindex="0">
+  <main data-v-6b5b01a9="" class="p-6">
+    <div data-v-6b5b01a9="" class="mb-4 flex justify-center"><img data-v-6b5b01a9="" alt="Logo" class="inline-block object-contain" src="http://localhost/storage/logo.svg" width="180"></div>
+    <div data-v-6b5b01a9="" class="current-version">v0.0.0 <span data-v-6b5b01a9="" class="badge">Plus</span> Edition <p data-v-6b5b01a9="" class="plus-badge"> Licensed to John Doe &lt;Koel Plus&gt; <br data-v-6b5b01a9=""> License key: <span data-v-6b5b01a9="" class="key font-mono">****-XXXX</span></p>
+    </div>
+    <!--v-if-->
+    <p data-v-6b5b01a9="" class="author my-4 text-k-fg-70 text-sm leading-relaxed"> This is created my Team start Up builder from Norton University Manager Mao Seavik - Kea somneang. Contact me if you want about full concept. </p>
+    <!--v-if-->
+  </main>
+  <footer data-v-6b5b01a9=""><button data-v-8943c846="" data-v-6b5b01a9="" data-variant="destructive" class="text-base text-white border border-transparent bg-k-primary px-3.5 py-2 rounded-sm cursor-pointer" type="button" data-testid="close-modal-btn" rounded="">Close</button></footer>
+</div>
+`;

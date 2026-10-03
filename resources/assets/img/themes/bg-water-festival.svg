@@ -1,0 +1,279 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Moul&amp;family=Kantumruy+Pro:wght@700&amp;display=swap');
+    </style>
+    <!-- Royal Night Sky & Tonle Sap River Gradient -->
+    <linearGradient id="wf-sky-river" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#030c17" />
+      <stop offset="30%" stop-color="#06182e" />
+      <stop offset="60%" stop-color="#09274a" />
+      <stop offset="85%" stop-color="#051930" />
+      <stop offset="100%" stop-color="#020810" />
+    </linearGradient>
+
+    <!-- Center UI Readability Darkening Radial Gradient -->
+    <radialGradient id="wf-center-wash" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#030c17" stop-opacity="0.82" />
+      <stop offset="50%" stop-color="#030c17" stop-opacity="0.65" />
+      <stop offset="80%" stop-color="#030c17" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#030c17" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Palace Gold Illumination -->
+    <linearGradient id="palace-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="35%" stop-color="#facc15" />
+      <stop offset="70%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#78350f" />
+    </linearGradient>
+
+    <!-- Touk Ngor Racing Boat Hull Gradient -->
+    <linearGradient id="boat-hull" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7f1d1d" />
+      <stop offset="30%" stop-color="#b91c1c" />
+      <stop offset="60%" stop-color="#d97706" />
+      <stop offset="85%" stop-color="#b91c1c" />
+      <stop offset="100%" stop-color="#450a0a" />
+    </linearGradient>
+
+    <!-- Water Ripple Aqua Glow -->
+    <linearGradient id="water-rip" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0" />
+      <stop offset="50%" stop-color="#67e8f9" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Loy Pratip Floating Lantern Glow -->
+    <radialGradient id="pratip-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="35%" stop-color="#fef08a" />
+      <stop offset="70%" stop-color="#f59e0b" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Sky & River Canvas Base -->
+  <rect width="1600" height="900" fill="url(#wf-sky-river)" />
+
+  <!-- Celebratory Fireworks in the Upper Night Sky -->
+  <!-- Firework 1 (Left Sky) -->
+  <g transform="translate(220, 100)" opacity="0.8">
+    <circle cx="0" cy="0" r="3.5" fill="#ffffff" />
+    <g stroke="#facc15" stroke-width="1.8" stroke-linecap="round">
+      <line x1="0" y1="0" x2="0" y2="-48" />
+      <line x1="0" y1="0" x2="34" y2="-34" />
+      <line x1="0" y1="0" x2="48" y2="0" />
+      <line x1="0" y1="0" x2="34" y2="34" />
+      <line x1="0" y1="0" x2="0" y2="48" />
+      <line x1="0" y1="0" x2="-34" y2="34" />
+      <line x1="0" y1="0" x2="-48" y2="0" />
+      <line x1="0" y1="0" x2="-34" y2="-34" />
+    </g>
+    <g stroke="#ef4444" stroke-width="1.2" stroke-linecap="round">
+      <line x1="0" y1="0" x2="18" y2="-38" />
+      <line x1="0" y1="0" x2="38" y2="-18" />
+      <line x1="0" y1="0" x2="38" y2="18" />
+      <line x1="0" y1="0" x2="18" y2="38" />
+      <line x1="0" y1="0" x2="-18" y2="38" />
+      <line x1="0" y1="0" x2="-38" y2="18" />
+      <line x1="0" y1="0" x2="-38" y2="-18" />
+      <line x1="0" y1="0" x2="-18" y2="-38" />
+    </g>
+  </g>
+
+  <!-- Firework 2 (Right Sky) -->
+  <g transform="translate(1380, 90)" opacity="0.8">
+    <circle cx="0" cy="0" r="3.5" fill="#ffffff" />
+    <g stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round">
+      <line x1="0" y1="0" x2="0" y2="-52" />
+      <line x1="0" y1="0" x2="36" y2="-36" />
+      <line x1="0" y1="0" x2="52" y2="0" />
+      <line x1="0" y1="0" x2="36" y2="36" />
+      <line x1="0" y1="0" x2="0" y2="52" />
+      <line x1="0" y1="0" x2="-36" y2="36" />
+      <line x1="0" y1="0" x2="-52" y2="0" />
+      <line x1="0" y1="0" x2="-36" y2="-36" />
+    </g>
+    <g stroke="#fef08a" stroke-width="1.2" stroke-linecap="round">
+      <line x1="0" y1="0" x2="20" y2="-44" />
+      <line x1="0" y1="0" x2="44" y2="-20" />
+      <line x1="0" y1="0" x2="44" y2="20" />
+      <line x1="0" y1="0" x2="20" y2="44" />
+      <line x1="0" y1="0" x2="-20" y2="44" />
+      <line x1="0" y1="0" x2="-44" y2="20" />
+      <line x1="0" y1="0" x2="-44" y2="-20" />
+      <line x1="0" y1="0" x2="-20" y2="-44" />
+    </g>
+  </g>
+
+  <!-- ===================================================================== -->
+  <!-- TOP-RIGHT EMBANKMENT: ROYAL PALACE CHANCHHAYA PAVILION (ចន្ទឆាយា)      -->
+  <!-- Illuminated at the riverbank with fireworks overhead                   -->
+  <!-- ===================================================================== -->
+  <g transform="translate(1300, 210) scale(0.58)" opacity="0.92">
+    <!-- Palace Riverfront Stone Embankment -->
+    <polygon points="-400,90 400,90 360,125 -360,125" fill="#334155" opacity="0.8" />
+    <rect x="-420" y="80" width="840" height="10" fill="#475569" />
+
+    <!-- Pavilion Royal Yellow Walls -->
+    <rect x="-280" y="-10" width="560" height="92" fill="#fde047" stroke="#ca8a04" stroke-width="1.5" />
+    <!-- Colonnade Pillars -->
+    <g fill="#ca8a04" stroke="#854d0e" stroke-width="1">
+      <rect x="-260" y="-5" width="12" height="88" />
+      <rect x="-210" y="-5" width="12" height="88" />
+      <rect x="-160" y="-5" width="12" height="88" />
+      <rect x="-110" y="-5" width="12" height="88" />
+      <rect x="-55" y="-5" width="12" height="88" />
+      <rect x="0" y="-5" width="12" height="88" />
+      <rect x="55" y="-5" width="12" height="88" />
+      <rect x="110" y="-5" width="12" height="88" />
+      <rect x="160" y="-5" width="12" height="88" />
+      <rect x="210" y="-5" width="12" height="88" />
+      <rect x="250" y="-5" width="12" height="88" />
+    </g>
+
+    <!-- Multi-Tiered Golden Roofs -->
+    <!-- Tier 1 -->
+    <polygon points="-320,-10 0,-60 320,-10 0,12" fill="url(#palace-gold)" stroke="#78350f" stroke-width="2" />
+    <path d="M-320,-10 Q-345,-30 -332,-50 Q-324,-35 -312,-18 Z" fill="#facc15" stroke="#78350f" />
+    <path d="M320,-10 Q345,-30 332,-50 Q324,-35 312,-18 Z" fill="#facc15" stroke="#78350f" />
+
+    <!-- Tier 2 -->
+    <polygon points="-230,-55 0,-98 230,-55 0,-38" fill="url(#palace-gold)" stroke="#78350f" stroke-width="1.8" />
+    <path d="M-230,-55 Q-250,-70 -242,-88 Q-234,-75 -222,-60 Z" fill="#facc15" stroke="#78350f" />
+    <path d="M230,-55 Q250,-70 242,-88 Q234,-75 222,-60 Z" fill="#facc15" stroke="#78350f" />
+
+    <!-- Tier 3 & Soaring Central Golden Prasat Spire -->
+    <polygon points="-140,-94 0,-132 140,-94 0,-78" fill="url(#palace-gold)" stroke="#78350f" stroke-width="1.8" />
+    <polygon points="-15,-130 0,-225 15,-130" fill="url(#palace-gold)" stroke="#78350f" stroke-width="1.8" />
+    <circle cx="0" cy="-225" r="5" fill="#ffffff" />
+    <ellipse cx="0" cy="-205" rx="8" ry="4" fill="#fef08a" />
+    <ellipse cx="0" cy="-185" rx="12" ry="6" fill="#f59e0b" />
+
+    <!-- Flanking Mini Spires -->
+    <polygon points="-145,-55 -140,-115 -135,-55" fill="url(#palace-gold)" stroke="#78350f" stroke-width="1" />
+    <circle cx="-140" cy="-115" r="3.5" fill="#fef08a" />
+    <polygon points="135,-55 140,-115 145,-55" fill="url(#palace-gold)" stroke="#78350f" stroke-width="1" />
+    <circle cx="140" cy="-115" r="3.5" fill="#fef08a" />
+  </g>
+
+  <!-- ===================================================================== -->
+  <!-- ILLUMINATED FLOATING LOY PRATIP LANTERNS ON THE RIVER                 -->
+  <!-- ===================================================================== -->
+  <!-- Float 1: Left River -->
+  <g transform="translate(140, 480) scale(0.7)">
+    <ellipse cx="60" cy="0" rx="120" ry="32" fill="url(#pratip-glow)" />
+    <path d="M-50,10 C-15,22 135,22 170,10 L150,24 C115,35 -5,35 -40,24 Z" fill="#0284c7" stroke="#38bdf8" stroke-width="2" />
+    <polygon points="60,-70 25,-10 95,-10" fill="#fef08a" stroke="#f59e0b" stroke-width="1.8" opacity="0.9" />
+    <line x1="60" y1="-70" x2="60" y2="-120" stroke="#ffffff" stroke-width="2.5" />
+    <circle cx="60" cy="-120" r="4.5" fill="#ffffff" />
+    <ellipse cx="60" cy="28" rx="80" ry="7" fill="url(#water-rip)" />
+  </g>
+
+  <!-- Float 2: Right River -->
+  <g transform="translate(1420, 460) scale(0.65)">
+    <ellipse cx="60" cy="0" rx="120" ry="32" fill="url(#pratip-glow)" />
+    <path d="M-50,10 C-15,22 135,22 170,10 L150,24 C115,35 -5,35 -40,24 Z" fill="#dc2626" stroke="#f87171" stroke-width="2" />
+    <polygon points="60,-70 28,-10 92,-10" fill="#fef08a" stroke="#f59e0b" stroke-width="1.8" opacity="0.9" />
+    <line x1="60" y1="-70" x2="60" y2="-120" stroke="#ffffff" stroke-width="2.5" />
+    <circle cx="60" cy="-120" r="4.5" fill="#ffffff" />
+    <ellipse cx="60" cy="28" rx="75" ry="7" fill="url(#water-rip)" />
+  </g>
+
+  <!-- ===================================================================== -->
+  <!-- FOREGROUND: TRADITIONAL RACING DRAGON BOAT (ទូកង - TOUK NGOR)          -->
+  <!-- ===================================================================== -->
+  <g transform="translate(80, 710)">
+    <!-- Water Splashes & Wave Wake under Hull -->
+    <path d="M1240,40 C1280,28 1320,18 1360,5 C1330,22 1290,48 1240,58 Z" fill="#67e8f9" opacity="0.85" />
+    <ellipse cx="1255" cy="48" rx="35" ry="10" fill="#ffffff" opacity="0.9" />
+    <rect x="-40" y="44" width="1340" height="5" rx="2.5" fill="url(#water-rip)" />
+
+    <!-- Touk Ngor Long Hull -->
+    <path d="M-25,14 C140,32 1020,32 1200,18 C1230,12 1270,2 1300,-20 C1280,2 1235,32 1200,40 C1020,54 140,54 -15,38 C-40,30 -70,10 -90,-28 C-75,-2 -45,10 -25,14 Z" 
+          fill="url(#boat-hull)" stroke="#78350f" stroke-width="2.5" />
+
+    <!-- Gold Dragons Scales Trim -->
+    <path d="M0,26 C160,42 980,42 1160,28" fill="none" stroke="#facc15" stroke-width="3.5" />
+    <path d="M15,33 C170,47 960,47 1140,35" fill="none" stroke="#fef08a" stroke-width="1.8" stroke-dasharray="12 6" />
+
+    <!-- Prow Naga Head with Flower Garland -->
+    <g transform="translate(1290, -18)">
+      <path d="M0,0 C18,-20 40,-24 52,-12 C48,-4 35,4 22,10 Z" fill="#facc15" stroke="#78350f" stroke-width="1.8" />
+      <circle cx="30" cy="-10" r="3" fill="#ef4444" />
+      <circle cx="12" cy="14" r="5" fill="#f43f5e" />
+      <circle cx="18" cy="22" r="5" fill="#facc15" />
+      <circle cx="23" cy="30" r="5" fill="#10b981" />
+    </g>
+
+    <!-- Stern Ornate Tail -->
+    <g transform="translate(-85, -24)">
+      <path d="M0,0 C-20,-28 -42,-40 -58,-24 C-50,-12 -34,-4 -12,8 Z" fill="#facc15" stroke="#78350f" stroke-width="1.8" />
+      <path d="M-52,-24 Q-90,-36 -120,-28" fill="none" stroke="#ef4444" stroke-width="3.5" stroke-linecap="round" />
+      <path d="M-48,-18 Q-86,-28 -115,-20" fill="none" stroke="#facc15" stroke-width="2.5" stroke-linecap="round" />
+    </g>
+
+    <!-- Rowers (Synchronized Rowers in Royal Blue with Gold Paddles) -->
+    <g id="rowers-compact">
+      <!-- 16 Synchronized Rowers -->
+      <g transform="translate(90, 8)"><circle cx="0" cy="-11" r="5.5" fill="#fed7aa" /><path d="M-6,-5 L6,-5 L6,10 L-6,10 Z" fill="#1d4ed8" /><line x1="-1" y1="2" x2="18" y2="38" stroke="#facc15" stroke-width="2.5" /><ellipse cx="19" cy="40" rx="4" ry="10" fill="#d97706" transform="rotate(25 19 40)" /></g>
+      <g transform="translate(150, 9)"><circle cx="0" cy="-11" r="5.5" fill="#fed7aa" /><path d="M-6,-5 L6,-5 L6,10 L-6,10 Z" fill="#1d4ed8" /><line x1="-1" y1="2" x2="18" y2="38" stroke="#facc15" stroke-width="2.5" /><ellipse cx="19" cy="40" rx="4" ry="10" fill="#d97706" transform="rotate(25 19 40)" /></g>
+      <g transform="translate(210, 10)"><circle cx="0" cy="-11" r="5.5" fill="#fed7aa" /><path d="M-6,-5 L6,-5 L6,10 L-6,10 Z" fill="#1d4ed8" /><line x1="-1" y1="2" x2="18" y2="38" stroke="#facc15" stroke-width="2.5" /><ellipse cx="19" cy="40" rx="4" ry="10" fill="#d97706" transform="rotate(25 19 40)" /></g>
+      <g transform="translate(270, 11)"><circle cx="0" cy="-11" r="5.5" fill="#fed7aa" /><path d="M-6,-5 L6,-5 L6,10 L-6,10 Z" fill="#1d4ed8" /><line x1="-1" y1="2" x2="18" y2="38" stroke="#facc15" stroke-width="2.5" /><ellipse cx="19" cy="40" rx="4" ry="10" fill="#d97706" transform="rotate(25 19 40)" /></g>
+      <g transform="translate(330, 12)"><circle cx="0" cy="-11" r="5.5" fill="#fed7aa" /><path d="M-6,-5 L6,-5 L6,10 L-6,10 Z" fill="#1d4ed8" /><line x1="-1" y1="2" x2="18" y2="38" stroke="#facc15" stroke-width="2.5" /><ellipse cx="19" cy="40" rx="4" ry="10" fill="#d97706" transform="rotate(25 19 40)" /></g>
+      <g transform="translate(390, 13)"><circle cx="0" cy="-11" r="5.5" fill="#fed7aa" /><path d="M-6,-5 L6,-5 L6,10 L-6,10 Z" fill="#1d4ed8" /><line x1="-1" y1="2" x2="18" y2="38" stroke="#facc15" stroke-width="2.5" /><ellipse cx="19" cy="40" rx="4" ry="10" fill="#d97706" transform="rotate(25 19 40)" /></g>
+      <g transform="translate(450, 13)"><circle cx="0" cy="-11" r="5.5" fill="#fed7aa" /><path d="M-6,-5 L6,-5 L6,10 L-6,10 Z" fill="#1d4ed8" /><line x1="-1" y1="2" x2="18" y2="38" stroke="#facc15" stroke-width="2.5" /><ellipse cx="19" cy="40" rx="4" ry="10" fill="#d97706" transform="rotate(25 19 40)" /></g>
+      <g transform="translate(510, 14)"><circle cx="0" cy="-11" r="5.5" fill="#fed7aa" /><path d="M-6,-5 L6,-5 L6,10 L-6,10 Z" fill="#1d4ed8" /><line x1="-1" y1="2" x2="18" y2="38" stroke="#facc15" stroke-width="2.5" /><ellipse cx="19" cy="40" rx="4" ry="10" fill="#d97706" transform="rotate(25 19 40)" /></g>
+      <!-- Center Rhythm Leader in Red -->
+      <g transform="translate(570, 5)"><circle cx="0" cy="-13" r="6" fill="#fed7aa" /><path d="M-7,-5 L7,-5 L7,11 L-7,11 Z" fill="#dc2626" /><line x1="0" y1="-4" x2="14" y2="-22" stroke="#facc15" stroke-width="3" stroke-linecap="round" /></g>
+      <g transform="translate(630, 14)"><circle cx="0" cy="-11" r="5.5" fill="#fed7aa" /><path d="M-6,-5 L6,-5 L6,10 L-6,10 Z" fill="#1d4ed8" /><line x1="-1" y1="2" x2="18" y2="38" stroke="#facc15" stroke-width="2.5" /><ellipse cx="19" cy="40" rx="4" ry="10" fill="#d97706" transform="rotate(25 19 40)" /></g>
+      <g transform="translate(690, 13)"><circle cx="0" cy="-11" r="5.5" fill="#fed7aa" /><path d="M-6,-5 L6,-5 L6,10 L-6,10 Z" fill="#1d4ed8" /><line x1="-1" y1="2" x2="18" y2="38" stroke="#facc15" stroke-width="2.5" /><ellipse cx="19" cy="40" rx="4" ry="10" fill="#d97706" transform="rotate(25 19 40)" /></g>
+      <g transform="translate(750, 12)"><circle cx="0" cy="-11" r="5.5" fill="#fed7aa" /><path d="M-6,-5 L6,-5 L6,10 L-6,10 Z" fill="#1d4ed8" /><line x1="-1" y1="2" x2="18" y2="38" stroke="#facc15" stroke-width="2.5" /><ellipse cx="19" cy="40" rx="4" ry="10" fill="#d97706" transform="rotate(25 19 40)" /></g>
+      <g transform="translate(810, 11)"><circle cx="0" cy="-11" r="5.5" fill="#fed7aa" /><path d="M-6,-5 L6,-5 L6,10 L-6,10 Z" fill="#1d4ed8" /><line x1="-1" y1="2" x2="18" y2="38" stroke="#facc15" stroke-width="2.5" /><ellipse cx="19" cy="40" rx="4" ry="10" fill="#d97706" transform="rotate(25 19 40)" /></g>
+      <g transform="translate(870, 10)"><circle cx="0" cy="-11" r="5.5" fill="#fed7aa" /><path d="M-6,-5 L6,-5 L6,10 L-6,10 Z" fill="#1d4ed8" /><line x1="-1" y1="2" x2="18" y2="38" stroke="#facc15" stroke-width="2.5" /><ellipse cx="19" cy="40" rx="4" ry="10" fill="#d97706" transform="rotate(25 19 40)" /></g>
+      <g transform="translate(930, 9)"><circle cx="0" cy="-11" r="5.5" fill="#fed7aa" /><path d="M-6,-5 L6,-5 L6,10 L-6,10 Z" fill="#1d4ed8" /><line x1="-1" y1="2" x2="18" y2="38" stroke="#facc15" stroke-width="2.5" /><ellipse cx="19" cy="40" rx="4" ry="10" fill="#d97706" transform="rotate(25 19 40)" /></g>
+      <g transform="translate(990, 8)"><circle cx="0" cy="-11" r="5.5" fill="#fed7aa" /><path d="M-6,-5 L6,-5 L6,10 L-6,10 Z" fill="#1d4ed8" /><line x1="-1" y1="2" x2="18" y2="38" stroke="#facc15" stroke-width="2.5" /><ellipse cx="19" cy="40" rx="4" ry="10" fill="#d97706" transform="rotate(25 19 40)" /></g>
+      <g transform="translate(1050, 7)"><circle cx="0" cy="-11" r="5.5" fill="#fed7aa" /><path d="M-6,-5 L6,-5 L6,10 L-6,10 Z" fill="#1d4ed8" /><line x1="-1" y1="2" x2="18" y2="38" stroke="#facc15" stroke-width="2.5" /><ellipse cx="19" cy="40" rx="4" ry="10" fill="#d97706" transform="rotate(25 19 40)" /></g>
+      <!-- Front Steersman -->
+      <g transform="translate(1140, 1)"><circle cx="0" cy="-13" r="6" fill="#fed7aa" /><path d="M-7,-5 L7,-5 L7,11 L-7,11 Z" fill="#f59e0b" /><line x1="0" y1="-4" x2="16" y2="-18" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" /></g>
+    </g>
+  </g>
+
+  <!-- ===================================================================== -->
+  <!-- TOP CENTER EMBLEM: REFINED WATER FESTIVAL TITLE SCRIPT                -->
+  <!-- ===================================================================== -->
+  <g transform="translate(800, 112)" opacity="0.92">
+    <ellipse cx="0" cy="8" rx="290" ry="48" fill="#030c17" opacity="0.75" />
+    <text x="0" y="4" 
+          font-family="'Moul', 'Khmer OS Muol', 'Khmer Sangam MN', 'Khmer MN', 'Kantumruy Pro', 'Noto Sans Khmer', system-ui, sans-serif" 
+          font-size="32" 
+          font-weight="700" 
+          text-anchor="middle" 
+          fill="#facc15" 
+          filter="drop-shadow(0px 2px 10px rgba(0,0,0,0.85))">
+      ព្រះរាជពិធីបុណ្យអ៊ំទូក
+    </text>
+    <text x="0" y="34" 
+          font-family="'Outfit', 'Inter', system-ui, sans-serif" 
+          font-size="11" 
+          font-weight="700" 
+          text-anchor="middle" 
+          fill="#38bdf8" 
+          letter-spacing="6" 
+          opacity="0.95">
+      BON OM TOUK • WATER &amp; MOON FESTIVAL
+    </text>
+  </g>
+
+  <!-- Central Reading Wash: Softly dims center to guarantee 100% UI clarity -->
+  <rect width="1600" height="900" fill="url(#wf-center-wash)" pointer-events="none" />
+
+  <!-- Bottom Dark Vignette for Music Player Controls Bar -->
+  <linearGradient id="wf-bar-mist" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#030c17" stop-opacity="0" />
+    <stop offset="60%" stop-color="#030c17" stop-opacity="0.5" />
+    <stop offset="100%" stop-color="#030c17" stop-opacity="0.88" />
+  </linearGradient>
+  <rect y="680" width="1600" height="220" fill="url(#wf-bar-mist)" pointer-events="none" />
+</svg>

@@ -1,0 +1,209 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Moul&amp;family=Kantumruy+Pro:wght@700&amp;display=swap');
+    </style>
+    <!-- Azure Festive Sky Gradient (From Behance Khmer New Year Project) -->
+    <linearGradient id="kny-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#041527" />
+      <stop offset="30%" stop-color="#08284d" />
+      <stop offset="60%" stop-color="#0369a1" />
+      <stop offset="85%" stop-color="#0ea5e9" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+
+    <!-- Center UI Readability Darkening Radial Gradient -->
+    <radialGradient id="kny-center-wash" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#041527" stop-opacity="0.82" />
+      <stop offset="50%" stop-color="#041527" stop-opacity="0.65" />
+      <stop offset="80%" stop-color="#041527" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#041527" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Star Lantern Candle Glow -->
+    <radialGradient id="star-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fffbeb" stop-opacity="0.95" />
+      <stop offset="35%" stop-color="#fde047" stop-opacity="0.8" />
+      <stop offset="70%" stop-color="#f59e0b" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#d97706" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Drum Shading -->
+    <linearGradient id="drum-wood" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#451a03" />
+      <stop offset="30%" stop-color="#92400e" />
+      <stop offset="70%" stop-color="#b45309" />
+      <stop offset="100%" stop-color="#78350f" />
+    </linearGradient>
+
+    <linearGradient id="drum-skin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef3c7" />
+      <stop offset="50%" stop-color="#fde68a" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+
+    <!-- Krama Pattern -->
+    <pattern id="krama-pat" width="18" height="18" patternUnits="userSpaceOnUse">
+      <rect width="18" height="18" fill="#f8fafc" />
+      <rect width="9" height="9" fill="#f59e0b" opacity="0.85" />
+      <rect x="9" y="9" width="9" height="9" fill="#f59e0b" opacity="0.85" />
+      <rect x="0" y="9" width="9" height="9" fill="#d97706" opacity="0.35" />
+      <rect x="9" y="0" width="9" height="9" fill="#d97706" opacity="0.35" />
+    </pattern>
+  </defs>
+
+  <!-- Sky Base -->
+  <rect width="1600" height="900" fill="url(#kny-sky)" />
+
+  <!-- Soft Bilowing Clouds (Subtle Behance Sky Atmosphere) -->
+  <g opacity="0.18" fill="#ffffff">
+    <path d="M-50,320 C20,270 120,260 180,290 C240,240 380,230 440,280 C500,220 640,230 700,280 C780,230 920,240 980,290 C1060,230 1220,240 1280,300 C1360,250 1520,260 1650,320 L1650,900 L-50,900 Z" />
+    <path opacity="0.3" d="M-50,480 C30,420 150,410 220,450 C320,390 480,400 550,460 C640,390 820,400 890,470 C1000,400 1180,410 1260,480 C1360,420 1540,430 1650,500 L1650,900 L-50,900 Z" />
+  </g>
+
+  <!-- Celebration Bunting Flags Across Top Border -->
+  <g opacity="0.75">
+    <path d="M-10,35 Q400,110 800,50 Q1200,110 1610,35" fill="none" stroke="#fef08a" stroke-width="2" />
+    <!-- Flags Segment 1 -->
+    <polygon points="50,52 35,98 75,94" fill="#ef4444" />
+    <polygon points="110,65 98,112 138,106" fill="#facc15" />
+    <polygon points="175,76 165,124 204,118" fill="#06b6d4" />
+    <polygon points="245,84 236,132 276,126" fill="#10b981" />
+    <polygon points="315,90 308,138 346,132" fill="#ec4899" />
+    <polygon points="390,92 385,140 422,134" fill="#f97316" />
+    <polygon points="465,90 462,137 498,132" fill="#3b82f6" />
+    <polygon points="540,84 538,131 574,126" fill="#facc15" />
+    <polygon points="615,76 615,122 650,117" fill="#ef4444" />
+    <polygon points="690,66 692,111 726,106" fill="#10b981" />
+    <polygon points="765,54 768,98 800,94" fill="#06b6d4" />
+    <!-- Flags Segment 2 -->
+    <polygon points="840,54 838,98 870,94" fill="#facc15" />
+    <polygon points="915,66 912,111 946,106" fill="#ec4899" />
+    <polygon points="990,76 990,122 1025,117" fill="#3b82f6" />
+    <polygon points="1065,84 1068,131 1104,126" fill="#10b981" />
+    <polygon points="1140,90 1142,137 1178,132" fill="#ef4444" />
+    <polygon points="1215,92 1220,140 1258,134" fill="#facc15" />
+    <polygon points="1290,90 1296,138 1334,132" fill="#06b6d4" />
+    <polygon points="1360,84 1370,132 1406,126" fill="#f97316" />
+    <polygon points="1430,76 1442,124 1478,118" fill="#10b981" />
+    <polygon points="1500,65 1515,112 1550,106" fill="#ec4899" />
+  </g>
+
+  <!-- ===================================================================== -->
+  <!-- RIGHT SIDE: TRADITIONAL KHMER 5-POINT STAR LANTERN (គោមផ្កាយ)         -->
+  <!-- ===================================================================== -->
+  <g transform="translate(1380, 440) scale(0.95)">
+    <!-- Ambient Lantern Glow -->
+    <circle cx="0" cy="0" r="320" fill="url(#star-glow)" />
+
+    <!-- Bamboo Ring -->
+    <circle cx="0" cy="0" r="180" fill="none" stroke="#b45309" stroke-width="5" opacity="0.65" />
+    <circle cx="0" cy="0" r="174" fill="none" stroke="#fef08a" stroke-width="2" opacity="0.9" />
+
+    <!-- 5-Point Geometric Star Lantern -->
+    <!-- Top Point (Ruby Red) -->
+    <polygon points="0,-220 40,-68 0,0" fill="#ef4444" opacity="0.92" />
+    <polygon points="0,-220 -40,-68 0,0" fill="#dc2626" opacity="0.92" />
+
+    <!-- Top Right Point (Golden Amber) -->
+    <polygon points="208,-68 65,32 0,0" fill="#facc15" opacity="0.92" />
+    <polygon points="208,-68 40,-68 0,0" fill="#eab308" opacity="0.92" />
+
+    <!-- Bottom Right Point (Cyan Azure) -->
+    <polygon points="128,176 0,74 0,0" fill="#06b6d4" opacity="0.92" />
+    <polygon points="128,176 65,32 0,0" fill="#0891b2" opacity="0.92" />
+
+    <!-- Bottom Left Point (Emerald Green) -->
+    <polygon points="-128,176 -65,32 0,0" fill="#10b981" opacity="0.92" />
+    <polygon points="-128,176 0,74 0,0" fill="#059669" opacity="0.92" />
+
+    <!-- Top Left Point (Royal Blue) -->
+    <polygon points="-208,-68 -40,-68 0,0" fill="#3b82f6" opacity="0.92" />
+    <polygon points="-208,-68 -65,32 0,0" fill="#2563eb" opacity="0.92" />
+
+    <!-- Bamboo Frame Gold Outlines -->
+    <polygon points="0,-220 40,-68 208,-68 65,32 128,176 0,74 -128,176 -65,32 -208,-68 -40,-68" 
+             fill="none" stroke="#fef08a" stroke-width="4" stroke-linejoin="round" />
+    <g stroke="#fef08a" stroke-width="2.5" opacity="0.8">
+      <line x1="0" y1="0" x2="0" y2="-220" />
+      <line x1="0" y1="0" x2="208" y2="-68" />
+      <line x1="0" y1="0" x2="128" y2="176" />
+      <line x1="0" y1="0" x2="-128" y2="176" />
+      <line x1="0" y1="0" x2="-208" y2="-68" />
+    </g>
+
+    <!-- Center Radiant Candle Lantern Core -->
+    <circle cx="0" cy="0" r="28" fill="#fffbeb" />
+    <circle cx="0" cy="0" r="18" fill="#fde047" />
+    <circle cx="0" cy="0" r="10" fill="#ffffff" />
+
+    <!-- Dangling Festive Paper Streamers Fluttering Down -->
+    <path d="M0,176 Q-15,250 10,320 T-5,410" fill="none" stroke="#ef4444" stroke-width="6" stroke-linecap="round" opacity="0.85" />
+    <path d="M-8,176 Q-25,240 -5,310 T-20,390" fill="none" stroke="#facc15" stroke-width="4.5" stroke-linecap="round" opacity="0.8" />
+    <path d="M8,176 Q25,255 5,330 T22,415" fill="none" stroke="#06b6d4" stroke-width="4.5" stroke-linecap="round" opacity="0.8" />
+    <path d="M-128,176 Q-160,240 -130,310 T-155,380" fill="none" stroke="#10b981" stroke-width="5" stroke-linecap="round" opacity="0.8" />
+    <path d="M128,176 Q160,245 135,315 T160,390" fill="none" stroke="#3b82f6" stroke-width="5" stroke-linecap="round" opacity="0.8" />
+  </g>
+
+  <!-- ===================================================================== -->
+  <!-- BOTTOM LEFT: TRADITIONAL KHMER FESTIVE SKOR DAI DRUM & KRAMA          -->
+  <!-- ===================================================================== -->
+  <g transform="translate(180, 680) scale(0.85)">
+    <!-- Shadow -->
+    <ellipse cx="60" cy="200" rx="170" ry="38" fill="#020f1c" opacity="0.5" />
+
+    <!-- Checkered Krama Scarf -->
+    <path d="M-100,140 C-30,120 100,140 190,105 C240,160 210,210 150,220 C80,230 -50,220 -100,195 Z" 
+          fill="url(#krama-pat)" stroke="#d97706" stroke-width="1.5" />
+
+    <!-- Drum Body -->
+    <path d="M20,140 C40,135 80,135 100,140 L115,190 C80,200 40,200 5,190 Z" fill="url(#drum-wood)" />
+    <path d="M35,75 C50,70 70,70 85,75 L95,140 C75,135 45,135 25,140 Z" fill="#78350f" />
+    <path d="M-45,-15 C-10,-50 130,-50 165,-15 L110,85 C80,72 40,72 10,85 Z" fill="url(#drum-wood)" />
+
+    <!-- Decorative Festive Tassels (Red & Gold) -->
+    <path d="M-35,22 Q-15,48 5,26 Q25,48 45,26 Q65,48 85,26 Q105,48 125,26 Q145,48 155,22 L145,38 Q125,60 105,42 Q85,60 65,42 Q45,60 25,42 Q5,60 -15,42 L-25,38 Z" fill="#dc2626" />
+    <path d="M-25,40 Q-5,64 15,44 Q35,64 55,44 Q75,64 95,44 Q115,64 135,44 L130,58 Q110,80 90,62 Q70,80 50,62 Q30,80 10,62 L-15,58 Z" fill="#facc15" />
+
+    <!-- Drum Head Leather Skin -->
+    <ellipse cx="60" cy="-20" rx="105" ry="34" fill="url(#drum-skin)" stroke="#78350f" stroke-width="3.5" />
+    <ellipse cx="60" cy="-20" rx="30" ry="10" fill="#d97706" opacity="0.3" />
+  </g>
+
+  <!-- ===================================================================== -->
+  <!-- TOP CENTER EMBLEM: REFINED KHMER NEW YEAR SCRIPT                      -->
+  <!-- ===================================================================== -->
+  <g transform="translate(800, 112)" opacity="0.92">
+    <ellipse cx="0" cy="8" rx="270" ry="48" fill="#041527" opacity="0.75" />
+    <text x="0" y="4" 
+          font-family="'Moul', 'Khmer OS Muol', 'Khmer Sangam MN', 'Khmer MN', 'Kantumruy Pro', 'Noto Sans Khmer', system-ui, sans-serif" 
+          font-size="34" 
+          font-weight="700" 
+          text-anchor="middle" 
+          fill="#ffffff" 
+          filter="drop-shadow(0px 2px 8px rgba(14,165,233,0.8))">
+      សួស្តីឆ្នាំថ្មី
+    </text>
+    <text x="0" y="34" 
+          font-family="'Outfit', 'Inter', system-ui, sans-serif" 
+          font-size="11" 
+          font-weight="700" 
+          text-anchor="middle" 
+          fill="#fef08a" 
+          letter-spacing="6" 
+          opacity="0.9">
+      KHMER NEW YEAR FESTIVAL
+    </text>
+  </g>
+
+  <!-- Central Reading Wash: Softly dims the center to keep UI cards crisp & clean -->
+  <rect width="1600" height="900" fill="url(#kny-center-wash)" pointer-events="none" />
+
+  <!-- Bottom Dark Vignette for Music Player Controls Bar -->
+  <linearGradient id="kny-bar-mist" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#041527" stop-opacity="0" />
+    <stop offset="60%" stop-color="#041527" stop-opacity="0.5" />
+    <stop offset="100%" stop-color="#041527" stop-opacity="0.88" />
+  </linearGradient>
+  <rect y="680" width="1600" height="220" fill="url(#kny-bar-mist)" pointer-events="none" />
+</svg>
