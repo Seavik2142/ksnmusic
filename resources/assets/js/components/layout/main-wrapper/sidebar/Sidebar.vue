@@ -1,7 +1,15 @@
 <template>
+  <Transition name="sidebar-backdrop">
+    <div
+      v-if="mobileShowing"
+      class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[998] md:hidden cursor-pointer"
+      @click="collapseSidebar"
+    />
+  </Transition>
+
   <nav
     :class="{ collapsed: !expanded, 'tmp-showing': tmpShowing, showing: mobileShowing }"
-    class="group left-0 top-0 flex flex-col fixed h-full w-full md:relative md:w-k-sidebar-width z-999 md:z-10"
+    class="group left-0 top-0 flex flex-col fixed h-full w-full md:relative md:w-k-sidebar-width md:h-auto md:m-2 md:mb-0 md:rounded-xl md:bg-k-surface md:backdrop-blur-2xl md:border md:border-k-fg-5 z-[999] md:z-10"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
   >
@@ -13,22 +21,18 @@
       </div>
     </section>
 
-    <section class="brand-block px-6 pt-6 pb-3 flex items-center">
-      <a :href="url('home')" class="inline-block group" title="KSN Music">
-        <img
-          :src="logo"
-          alt="KSN"
-          class="h-16 w-auto max-w-[210px] object-contain transition-transform duration-200 group-hover:scale-[1.03]"
-        />
+    <section class="brand-block px-6 pt-6 pb-2 flex items-center">
+      <a :href="url('home')" class="inline-block" title="KSN Music">
+        <BrandLogo class="h-8 max-w-[180px]" />
       </a>
     </section>
 
-    <section class="home-search-block px-6 pb-6 pt-3 flex gap-2">
+    <section class="home-search-block px-4 pb-4 pt-3 flex gap-2">
       <HomeButton v-show="!searchFocused" />
       <SearchForm class="flex-1" @focus-change="onSearchFocusChange" />
     </section>
 
-    <section class="scroll-mask-y pt-2 pb-10 overflow-y-auto space-y-8">
+    <section class="scroll-mask-y pt-2 pb-10 overflow-y-auto space-y-6">
       <SidebarYourMusicSection />
       <SidebarPlaylistsSection />
       <SidebarManageSection v-if="showManageOptions" />
@@ -54,10 +58,10 @@ import { useLocalStorage } from '@/composables/useLocalStorage'
 import { useRouter } from '@/composables/useRouter'
 import { usePolicies } from '@/composables/usePolicies'
 import { useHookSlot } from '@/composables/useHookSlot'
-import { useBranding } from '@/composables/useBranding'
 
 import HomeButton from '@/components/layout/main-wrapper/sidebar/HomeButton.vue'
 import SearchForm from '@/components/ui/SearchForm.vue'
+import BrandLogo from '@/components/ui/BrandLogo.vue'
 import SideSheetButton from '@/components/layout/main-wrapper/side-sheet/SideSheetButton.vue'
 import SidebarManageSection from './SidebarManageSection.vue'
 import SidebarPlaylistsSection from './SidebarPlaylistsSection.vue'
@@ -66,7 +70,6 @@ import SidebarYourMusicSection from './SidebarYourLibrarySection.vue'
 
 const { url, onRouteChanged } = useRouter()
 const { currentUserCan } = usePolicies()
-const { logo } = useBranding()
 const { get: lsGet, set: lsSet } = useLocalStorage()
 
 const mobileShowing = ref(false)
@@ -165,18 +168,29 @@ eventBus.on('TOGGLE_SIDEBAR', () => (mobileShowing.value = !mobileShowing.value)
 <style lang="postcss" scoped>
 @reference '@css/app.pcss';
 
+.sidebar-backdrop-enter-active,
+.sidebar-backdrop-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-backdrop-enter-from,
+.sidebar-backdrop-leave-to {
+  opacity: 0;
+}
+
 nav {
   -ms-overflow-style: -ms-autohiding-scrollbar;
+  transition: width 0.3s var(--ease-standard);
 
   &.collapsed {
-    @apply w-4 transition-[width] duration-200;
+    @apply w-4 md:bg-transparent md:border-transparent md:backdrop-blur-none;
 
     > *:not(.btn-toggle) {
       @apply hidden;
     }
 
     &.tmp-showing {
-      @apply fixed h-screen bg-k-bg w-k-sidebar-width shadow-2xl z-[999];
+      @apply fixed h-screen m-0 rounded-none bg-k-bg w-k-sidebar-width shadow-2xl z-[999];
 
       > *:not(.btn-toggle, .btn-collapse-block) {
         @apply block;
@@ -194,12 +208,14 @@ nav {
     background-attachment: var(--bg-attachment);
     background-size: var(--bg-size);
     background-position: var(--bg-position);
+    box-shadow: none;
 
-    transform: translateX(-100vw);
-    transition: transform 0.2s ease-in-out;
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 
     &.showing {
       transform: translateX(0);
+      box-shadow: 16px 0 48px rgba(0, 0, 0, 0.65);
     }
   }
 }

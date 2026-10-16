@@ -17,37 +17,50 @@
         <div class="progress-hover" :style="{ width: `${hoverProgress}%` }" />
         <div class="progress-played" :style="{ width: `${progress}%` }" />
       </div>
+      <span
+        v-if="seekPreviewProgress !== null && durationSeconds > 0"
+        class="seek-preview"
+        :style="{ left: `clamp(24px, ${seekPreviewProgress}%, calc(100% - 24px))` }"
+        data-testid="seek-preview"
+      >
+        {{ seekPreviewTime }}
+      </span>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onBeforeUnmount, ref } from 'vue'
+import { computed, onBeforeUnmount, ref } from 'vue'
 import { playback } from '@/services/playbackManager'
-import { crossfadeService } from '@/services/crossfadeService'
+import { getActivePlaybackMedia } from '@/composables/usePlaybackTime'
+import { secondsToHis } from '@/utils/formatters'
 
 const progress = ref(0)
 const bufferProgress = ref(0)
 const hoverProgress = ref(0)
+const durationSeconds = ref(0)
 const isLoading = ref(false)
 const isDragging = ref(false)
 
-const getActiveMedia = (): HTMLMediaElement | null => {
-  if (crossfadeService.active && crossfadeService.state) {
-    return crossfadeService.state.incomingAudio
+const seekPreviewProgress = computed(() => {
+  if (isDragging.value) {
+    return progress.value
   }
 
-  return playback('current')?.media ?? null
-}
+  return hoverProgress.value > 0 ? hoverProgress.value : null
+})
+
+const seekPreviewTime = computed(() => secondsToHis(((seekPreviewProgress.value ?? 0) / 100) * durationSeconds.value))
 
 const updateProgress = () => {
-  const media = getActiveMedia()
+  const media = getActivePlaybackMedia()
 
   if (!media) {
     return
   }
 
   const { currentTime, duration, buffered, readyState } = media
+  durationSeconds.value = Number.isFinite(duration) ? duration : 0
 
   if (duration > 0) {
     progress.value = (currentTime / duration) * 100
@@ -169,15 +182,21 @@ onBeforeUnmount(() => {
 
 .hit-area:hover .track,
 .audio-player.dragging .track {
-  height: 6px;
+  height: 5px;
+}
+
+.seek-preview {
+  @apply absolute top-[14px] -translate-x-1/2 px-1.5 py-0.5 rounded-md bg-k-bg text-k-fg text-[11px] font-medium
+    tabular-nums pointer-events-none border border-k-fg-10;
+  box-shadow: var(--shadow-floating);
 }
 
 .progress-buffer {
-  @apply absolute top-0 left-0 h-full bg-white/10 transition-[width] duration-200 ease-in-out rounded-r-full;
+  @apply absolute top-0 left-0 h-full bg-k-fg-10 transition-[width] duration-200 ease-in-out rounded-r-full;
 }
 
 .progress-hover {
-  @apply absolute top-0 left-0 h-full bg-white/15 opacity-0 transition-opacity rounded-r-full;
+  @apply absolute top-0 left-0 h-full bg-k-fg-10 opacity-0 transition-opacity rounded-r-full;
 }
 
 .hit-area:hover .progress-hover {
@@ -185,14 +204,12 @@ onBeforeUnmount(() => {
 }
 
 .progress-played {
-  @apply absolute top-0 left-0 h-full bg-k-fg-10 transition-[width] duration-200 ease-in-out rounded-r-full;
+  @apply absolute top-0 left-0 h-full bg-k-fg-70 transition-[width,background-color] duration-200 ease-in-out rounded-r-full;
 }
 
 .audio-player:hover .progress-played,
 .audio-player.dragging .progress-played {
   @apply bg-k-highlight;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--color-highlight), #ff8a00 30%), var(--color-highlight));
-  box-shadow: 0 0 10px color-mix(in srgb, var(--color-highlight), transparent 40%);
 }
 
 .audio-player.dragging .progress-played {
@@ -203,19 +220,18 @@ onBeforeUnmount(() => {
   @apply no-hover:bg-k-highlight;
 }
 
-/* Glowing Scrubber Thumb Bead */
 .progress-played::after {
   content: '';
   position: absolute;
-  right: -5px;
+  right: -6px;
   top: 50%;
   transform: translateY(-50%) scale(0);
   width: 12px;
   height: 12px;
   border-radius: 9999px;
-  background-color: #ffffff;
-  box-shadow: 0 0 10px 2px var(--color-highlight), 0 2px 4px rgba(0, 0, 0, 0.4);
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background-color: var(--color-fg);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0.5);
+  transition: transform 0.15s var(--ease-standard);
   pointer-events: none;
   z-index: 2;
 }
@@ -223,10 +239,6 @@ onBeforeUnmount(() => {
 .hit-area:hover .progress-played::after,
 .audio-player.dragging .progress-played::after {
   transform: translateY(-50%) scale(1);
-}
-
-.audio-player.dragging .progress-played::after {
-  transform: translateY(-50%) scale(1.3);
 }
 
 /* Loading animation: diagonal stripes */

@@ -4,7 +4,7 @@
     class="fixed sm:relative top-0 w-screen md:w-auto flex flex-col md:flex-row-reverse z-2"
   >
     <header
-      class="controls flex md:flex-col justify-between items-center md:w-[64px] md:py-6 tw:px-0 bg-black/5 md:border-l border-solid md:border-l-k-fg-5 md:border-b-0 md:shadow-none z-2 w-screen flex-row border-b border-b-k-fg-5 border-l-0 shadow-xl py-0 px-6 h-k-header-height"
+      class="controls flex md:flex-col justify-between items-center md:w-[56px] md:py-4 md:mt-2 md:mr-2 md:rounded-xl bg-black/5 md:bg-k-surface md:backdrop-blur-2xl md:border md:border-k-fg-5 md:shadow-none z-2 w-screen flex-row border-b border-b-k-fg-5 shadow-xl py-0 px-6 h-k-header-height md:h-auto"
     >
       <div class="btn-group">
         <SideSheetButton class="md:hidden" @click.prevent="expandSidebar">
@@ -216,7 +216,7 @@ aside {
 }
 
 .panes {
-  @apply no-hover:overflow-y-auto w-k-side-sheet-width;
+  @apply no-hover:overflow-y-auto w-k-side-sheet-width md:mt-2 md:mr-2 md:rounded-xl md:bg-k-surface md:backdrop-blur-2xl md:border md:border-k-fg-5;
 
   @media screen and (max-width: 768px) {
     width: 100%;

@@ -1,13 +1,10 @@
 <template>
   <footer
     ref="root"
-    :class="{ 'is-playing': isPlaying }"
-    class="flex flex-col relative z-20 backdrop-blur-2xl bg-k-fg-3/85 border border-k-fg-5 m-4 rounded-xl overflow-hidden h-k-footer-height pt-(--progress-bar-height) transition-all duration-300"
+    class="flex flex-col relative z-20 backdrop-blur-2xl bg-k-surface border border-k-fg-5 m-2 rounded-xl overflow-hidden h-k-footer-height pt-(--progress-bar-height)"
     @mousemove="showControls"
     @contextmenu.prevent="requestContextMenu"
   >
-    <div v-if="isPlaying" class="ambient-aura pointer-events-none absolute inset-x-0 top-0 h-[2px] z-30" />
-
     <AudioPlayer v-show="currentStreamable" :class="isRadio && 'pointer-events-none'" />
 
     <div class="fullscreen-backdrop hidden" />
@@ -62,7 +59,6 @@ const { openContextMenu } = useContextMenu()
 
 const showingUpNext = computed(() => nextPlayable.value && isFullscreen.value)
 const isRadio = computed(() => currentStreamable.value && isRadioStation(currentStreamable.value))
-const isPlaying = computed(() => currentStreamable.value?.playback_state === 'Playing')
 
 const requestContextMenu = (event: MouseEvent) => {
   if (document.fullscreenElement || !currentStreamable.value) {
@@ -177,31 +173,7 @@ eventBus.on('FULLSCREEN_TOGGLE', () => toggleFullscreen()).on('UP_NEXT', next =>
 }
 
 footer {
-  box-shadow:
-    0 4px 30px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-
-  &.is-playing {
-    border-color: color-mix(in srgb, var(--color-highlight), transparent 75%);
-    box-shadow:
-      0 0 35px -5px color-mix(in srgb, var(--color-highlight), transparent 75%),
-      0 8px 32px 0 rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  }
-
-  .ambient-aura {
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      var(--color-highlight) 25%,
-      #ff758c 50%,
-      var(--color-highlight) 75%,
-      transparent 100%
-    );
-    background-size: 200% 100%;
-    animation: ambient-flow 4s ease-in-out infinite;
-    box-shadow: 0 0 14px 2px var(--color-highlight);
-  }
+  box-shadow: var(--shadow-card);
 
   .fullscreen-backdrop {
     background-color: #1d1d1d;
@@ -252,15 +224,6 @@ footer {
     .fullscreen-backdrop {
       @apply saturate-[0.2] block absolute top-0 left-0 w-full h-full z-0 bg-cover bg-no-repeat bg-top;
     }
-  }
-}
-
-@keyframes ambient-flow {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
   }
 }
 </style>

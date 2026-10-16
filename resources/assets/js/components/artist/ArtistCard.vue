@@ -16,6 +16,7 @@
         <ExternalMark v-if="artist.is_external" class="mr-1" />
         {{ artist.name }}
       </a>
+      <span class="text-[0.9rem]">Artist</span>
     </template>
     <template #meta>
       <a :title="`Shuffle all songs by ${artist.name}`" role="button" @click.prevent="shuffle"> Shuffle </a>

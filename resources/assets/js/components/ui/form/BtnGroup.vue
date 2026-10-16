@@ -13,20 +13,20 @@
     }
 
     &:first-of-type {
-      @apply rounded-l-md rounded-r-none;
+      @apply rounded-l-full rounded-r-none;
     }
 
     &:last-of-type {
-      @apply rounded-r-md rounded-l-none;
+      @apply rounded-r-full rounded-l-none;
     }
 
     &:only-of-type {
-      @apply rounded-sm;
+      @apply rounded-full;
     }
   }
 
   &[uppercase] :deep(button) {
-    @apply uppercase;
+    @apply uppercase tracking-wider text-[0.8rem] font-semibold;
   }
 }
 </style>

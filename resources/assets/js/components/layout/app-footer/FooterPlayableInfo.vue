@@ -1,22 +1,24 @@
 <template>
   <div
-    :class="{ playing: playable?.playback_state === 'Playing' }"
+    :class="{ playing: isPlaying }"
     :draggable="draggable"
-    class="song-info px-6 py-0 flex items-center content-start w-[84px] md:w-[420px] gap-5"
+    class="song-info px-4 py-0 flex items-center content-start w-[84px] md:w-[420px] gap-3.5"
     @dragstart="onDragStart"
   >
     <span
+      :key="playable?.id"
       v-koel-tooltip
       :class="playable && 'cursor-pointer'"
       :title="playable ? 'Scroll to currently playing' : undefined"
-      class="album-thumb block h-[55%] md:h-3/4 aspect-square rounded-full bg-cover"
+      class="album-thumb animate-pop-in relative block h-[55%] md:h-14 aspect-square rounded-md bg-cover bg-center shrink-0"
       @click="scrollToCurrentInQueue"
     />
-    <div v-if="playable" class="meta overflow-hidden hidden md:block">
-      <h3 class="title overflow-hidden whitespace-nowrap">
+    <div v-if="playable" :key="playable.id" class="meta animate-rise overflow-hidden hidden md:flex flex-col gap-0.5">
+      <h3 class="title flex items-center gap-2 overflow-hidden whitespace-nowrap font-medium text-k-fg">
         <MarqueeText :text="playable.title" />
+        <AudioEqualizer v-if="isPlaying" class="shrink-0" size="sm" :bar-count="3" />
       </h3>
-      <a :href="artistOrPodcastUri" class="artist overflow-hidden whitespace-nowrap block text-[0.9rem]">
+      <a :href="artistOrPodcastUri" class="artist overflow-hidden whitespace-nowrap block text-[0.9rem] text-k-fg-60">
         <MarqueeText :text="artistOrPodcastName" />
       </a>
     </div>
@@ -36,12 +38,14 @@ import { useBranding } from '@/composables/useBranding'
 import { cache } from '@/services/cache'
 
 import MarqueeText from '@/components/ui/MarqueeText.vue'
+import AudioEqualizer from '@/components/ui/AudioEqualizer.vue'
 
 const { startDragging } = useDraggable('playables')
 const { go, url } = useRouter()
 const { cover: defaultCover } = useBranding()
 
 const playable = requireInjection<Ref<Playable | undefined>>(CurrentStreamableKey, ref())
+const isPlaying = computed(() => playable.value?.playback_state === 'Playing')
 
 const cover = computed(() =>
   playable.value ? getPlayableProp(playable.value, 'album_cover', 'episode_image') : defaultCover,
@@ -84,65 +88,27 @@ const scrollToCurrentInQueue = () => {
   }
 
   .album-thumb {
-    position: relative;
     background-image: v-bind(coverBackgroundImage);
-    transition:
-      transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-      box-shadow 0.3s ease;
-
-    &:hover {
-      transform: scale(1.08);
-    }
-
-    /* Vinyl Grooves */
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 9999px;
-      background: repeating-radial-gradient(
-        circle at center,
-        transparent,
-        transparent 5px,
-        rgba(255, 255, 255, 0.05) 6px,
-        transparent 7px
-      );
-      pointer-events: none;
-      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.7);
-    }
-
-    /* Vinyl Center Spindle Hole */
-    &::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 14%;
-      height: 14%;
-      border-radius: 9999px;
-      background-color: #111111;
-      border: 2px solid rgba(255, 255, 255, 0.35);
-      box-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
-      z-index: 2;
-      pointer-events: none;
-    }
+    box-shadow: var(--shadow-floating);
 
     :fullscreen & {
       @apply h-20;
     }
+
+    &::after {
+      @apply content-[''] absolute inset-0 rounded-[inherit] opacity-0 pointer-events-none;
+      box-shadow: 0 0 22px 2px color-mix(in srgb, var(--color-highlight), transparent 45%);
+      transition: opacity 0.4s var(--ease-standard);
+    }
+  }
+
+  &.playing .album-thumb::after {
+    animation: now-playing-breathe 3.2s ease-in-out infinite;
   }
 
   .meta {
-    .title {
-      transition: color 0.2s ease;
-    }
-
     .artist {
-      transition: color 0.2s ease;
-      &:hover {
-        @apply text-k-highlight;
-      }
+      @apply transition-colors duration-150 hover:text-k-fg hover:underline underline-offset-2;
     }
 
     :fullscreen & {
@@ -157,13 +123,16 @@ const scrollToCurrentInQueue = () => {
       }
     }
   }
+}
 
-  &.playing .album-thumb {
-    @apply motion-reduce:animate-none animate-vinyl-spin;
-    box-shadow:
-      0 0 0 2px color-mix(in srgb, var(--color-highlight), transparent 60%),
-      0 0 20px -2px color-mix(in srgb, var(--color-highlight), transparent 30%),
-      0 4px 12px rgba(0, 0, 0, 0.5);
+@keyframes now-playing-breathe {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+
+  50% {
+    opacity: 0.85;
   }
 }
 </style>

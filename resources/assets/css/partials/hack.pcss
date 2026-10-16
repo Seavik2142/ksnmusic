@@ -22,27 +22,15 @@ html.non-mac {
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-k-bg border border-k-fg-20 rounded-[50px];
+    @apply bg-k-fg-20 rounded-full border-2 border-solid border-transparent bg-clip-padding;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-[#303030];
-  }
-
-  ::-webkit-scrollbar-thumb:active {
-    @apply bg-k-bg;
+    @apply bg-k-fg-40;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-k-bg border-0 rounded-[50px];
-  }
-
-  ::-webkit-scrollbar-track:hover {
-    @apply bg-k-bg;
-  }
-
-  ::-webkit-scrollbar-track:active {
-    @apply bg-[#333];
+    @apply bg-transparent;
   }
 
   ::-webkit-scrollbar-corner {

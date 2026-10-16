@@ -24,26 +24,26 @@
                 v-if="overview.artist.image && !artistImageError"
                 :src="overview.artist.image"
                 :alt="overview.artist.name"
-                class="w-16 h-16 md:w-20 md:h-20 rounded-2xl object-cover shadow-lg ring-2 ring-k-fg-10 group-hover:ring-k-highlight transition duration-200"
+                class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover shadow-lg ring-2 ring-k-fg-10 group-hover:ring-k-highlight transition duration-200"
                 @error="artistImageError = true"
               />
               <div
                 v-else
-                class="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-tr from-amber-500 via-rose-500 to-indigo-600 text-white font-black text-2xl md:text-3xl flex items-center justify-center shadow-lg uppercase select-none ring-2 ring-k-fg-10 group-hover:ring-k-highlight transition duration-200"
+                class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-k-fg-10 text-k-fg font-bold text-2xl md:text-3xl flex items-center justify-center shadow-lg uppercase select-none ring-2 ring-k-fg-10 group-hover:ring-k-highlight transition duration-200"
               >
                 {{ overview.artist.name.charAt(0) }}
               </div>
 
               <!-- Camera hover overlay -->
               <div
-                class="absolute inset-0 rounded-2xl bg-black/65 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center text-white transition duration-200 backdrop-blur-[2px]"
+                class="absolute inset-0 rounded-full bg-black/65 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center text-white transition duration-200 backdrop-blur-[2px]"
               >
                 <Icon :icon="faCamera" class="text-base md:text-lg mb-0.5" />
                 <span class="text-[9px] font-bold uppercase tracking-wider">Change</span>
               </div>
 
               <span
-                class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs shadow-md border-2 border-k-bg-primary group-hover:scale-110 transition duration-200"
+                class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-k-highlight text-k-highlight-fg flex items-center justify-center text-xs shadow-md border-2 border-k-bg group-hover:scale-110 transition duration-200"
                 title="Verified Artist Studio"
               >
                 <Icon :icon="faCheck" />
@@ -54,7 +54,7 @@
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-1">
                 <span
-                  class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-amber-500/15 text-amber-300 border border-amber-500/30"
+                  class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-k-highlight/15 text-k-highlight border border-k-highlight/30"
                 >
                   <Icon :icon="faMicrophoneLines" class="text-[9px]" />
                   Artist Studio
@@ -80,7 +80,7 @@
             <div v-if="accessibleArtists.length > 1" class="relative">
               <select
                 :value="overview.artist.id"
-                class="appearance-none bg-k-fg-5 hover:bg-k-fg-10 text-xs font-medium text-k-fg py-2 pl-3 pr-8 rounded-xl border border-k-fg-10 focus:outline-none focus:ring-1 focus:ring-k-primary transition cursor-pointer"
+                class="appearance-none bg-k-fg-5 hover:bg-k-fg-10 text-xs font-medium text-k-fg py-2 pl-3.5 pr-8 rounded-full border border-k-fg-10 focus:outline-none focus:ring-1 focus:ring-k-highlight transition cursor-pointer"
                 title="Switch artist profile"
                 @change="switchArtist(($event.target as HTMLSelectElement).value)"
               >
@@ -95,13 +95,18 @@
             </div>
 
             <!-- Upload Music Button -->
-            <Btn class="btn-upload flex items-center gap-1.5" @click="goToUpload">
+            <Btn variant="highlight" class="btn-upload flex items-center gap-1.5" @click="goToUpload">
               <Icon :icon="faUpload" />
               <span>Upload Music</span>
             </Btn>
 
             <!-- Change Photo / Edit Artist Button -->
-            <Btn variant="ghost" class="flex items-center gap-1.5" title="Change artist photo & name" @click="openEditArtistModal">
+            <Btn
+              variant="ghost"
+              class="flex items-center gap-1.5"
+              title="Change artist photo & name"
+              @click="openEditArtistModal"
+            >
               <Icon :icon="faCamera" />
               <span>Change Photo</span>
             </Btn>
@@ -115,7 +120,7 @@
             <!-- Refresh Button -->
             <button
               type="button"
-              class="w-9 h-9 rounded-xl flex items-center justify-center text-k-fg-60 hover:text-k-fg hover:bg-k-fg-10 transition border border-k-fg-10 cursor-pointer"
+              class="size-[34px] rounded-full flex items-center justify-center text-k-fg-60 hover:text-k-fg hover:bg-k-fg-10 transition border border-k-fg-10 cursor-pointer"
               :class="{ 'opacity-50 pointer-events-none': loading }"
               title="Refresh statistics"
               @click="refreshData"
@@ -132,13 +137,11 @@
       <div v-if="overview" class="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <!-- Card 1: Monthly Listeners -->
         <div
-          class="p-4 md:p-5 rounded-2xl bg-k-fg-5 border border-k-fg-10 backdrop-blur-md relative overflow-hidden transition-all duration-200 hover:border-emerald-500/40 hover:shadow-lg hover:shadow-emerald-500/5 group"
+          class="p-4 md:p-5 rounded-2xl bg-k-fg-5 border border-k-fg-10 backdrop-blur-md relative overflow-hidden transition-colors duration-200 hover:border-k-fg-20 hover:bg-k-fg-10 group"
         >
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-semibold uppercase tracking-wider text-k-fg-60">Monthly Listeners</span>
-            <div
-              class="w-9 h-9 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 flex items-center justify-center text-sm group-hover:scale-105 transition-transform"
-            >
+            <div class="size-9 rounded-full bg-k-fg-10 text-k-fg-70 flex items-center justify-center text-sm">
               <Icon :icon="faUsers" />
             </div>
           </div>
@@ -153,13 +156,11 @@
 
         <!-- Card 2: Total Streams -->
         <div
-          class="p-4 md:p-5 rounded-2xl bg-k-fg-5 border border-k-fg-10 backdrop-blur-md relative overflow-hidden transition-all duration-200 hover:border-sky-500/40 hover:shadow-lg hover:shadow-sky-500/5 group"
+          class="p-4 md:p-5 rounded-2xl bg-k-fg-5 border border-k-fg-10 backdrop-blur-md relative overflow-hidden transition-colors duration-200 hover:border-k-fg-20 hover:bg-k-fg-10 group"
         >
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-semibold uppercase tracking-wider text-k-fg-60">Total Streams</span>
-            <div
-              class="w-9 h-9 rounded-xl bg-sky-500/15 text-sky-400 border border-sky-500/25 flex items-center justify-center text-sm group-hover:scale-105 transition-transform"
-            >
+            <div class="size-9 rounded-full bg-k-fg-10 text-k-fg-70 flex items-center justify-center text-sm">
               <Icon :icon="faHeadphones" />
             </div>
           </div>
@@ -171,13 +172,11 @@
 
         <!-- Card 3: Followers & Fans -->
         <div
-          class="p-4 md:p-5 rounded-2xl bg-k-fg-5 border border-k-fg-10 backdrop-blur-md relative overflow-hidden transition-all duration-200 hover:border-rose-500/40 hover:shadow-lg hover:shadow-rose-500/5 group"
+          class="p-4 md:p-5 rounded-2xl bg-k-fg-5 border border-k-fg-10 backdrop-blur-md relative overflow-hidden transition-colors duration-200 hover:border-k-fg-20 hover:bg-k-fg-10 group"
         >
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-semibold uppercase tracking-wider text-k-fg-60">Followers &amp; Fans</span>
-            <div
-              class="w-9 h-9 rounded-xl bg-rose-500/15 text-rose-400 border border-rose-500/25 flex items-center justify-center text-sm group-hover:scale-105 transition-transform"
-            >
+            <div class="size-9 rounded-full bg-k-fg-10 text-k-fg-70 flex items-center justify-center text-sm">
               <Icon :icon="faHeart" />
             </div>
           </div>
@@ -189,13 +188,11 @@
 
         <!-- Card 4: Catalog & Reach -->
         <div
-          class="p-4 md:p-5 rounded-2xl bg-k-fg-5 border border-k-fg-10 backdrop-blur-md relative overflow-hidden transition-all duration-200 hover:border-amber-500/40 hover:shadow-lg hover:shadow-amber-500/5 group"
+          class="p-4 md:p-5 rounded-2xl bg-k-fg-5 border border-k-fg-10 backdrop-blur-md relative overflow-hidden transition-colors duration-200 hover:border-k-fg-20 hover:bg-k-fg-10 group"
         >
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-semibold uppercase tracking-wider text-k-fg-60">Catalog &amp; Reach</span>
-            <div
-              class="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/25 flex items-center justify-center text-sm group-hover:scale-105 transition-transform"
-            >
+            <div class="size-9 rounded-full bg-k-fg-10 text-k-fg-70 flex items-center justify-center text-sm">
               <Icon :icon="faCompactDisc" />
             </div>
           </div>
@@ -210,27 +207,19 @@
       </div>
 
       <!-- Navigation Tabs -->
-      <div v-if="overview" class="flex border-b border-k-fg-10">
-        <nav class="flex gap-2 -mb-px overflow-x-auto [scrollbar-width:none]">
+      <div v-if="overview" class="flex pb-3 border-b border-k-fg-5">
+        <nav class="flex gap-2 overflow-x-auto [scrollbar-width:none]">
           <button
             v-for="tab in tabs"
             :key="tab.id"
             type="button"
-            class="px-4 py-2.5 text-xs font-bold uppercase tracking-wider rounded-t-xl transition-all duration-150 flex items-center gap-2 border-b-2 cursor-pointer"
-            :class="
-              activeTab === tab.id
-                ? 'border-k-primary text-k-primary bg-k-fg-5'
-                : 'border-transparent text-k-fg-60 hover:text-k-fg hover:bg-k-fg-5'
-            "
+            class="studio-tab"
+            :class="{ active: activeTab === tab.id }"
             @click="activeTab = tab.id"
           >
-            <Icon :icon="tab.icon" class="text-xs" />
+            <Icon :icon="tab.icon" class="text-xs opacity-70" />
             {{ tab.label }}
-            <span
-              v-if="tab.badge !== undefined"
-              class="px-1.5 py-0.5 rounded-full text-[10px] tabular-nums"
-              :class="activeTab === tab.id ? 'bg-k-primary/20 text-k-primary' : 'bg-k-fg-10 text-k-fg-60'"
-            >
+            <span v-if="tab.badge !== undefined" class="studio-tab-badge">
               {{ tab.badge }}
             </span>
           </button>
@@ -246,7 +235,7 @@
             <div class="flex items-center justify-between">
               <div>
                 <h2 class="text-base font-bold text-k-fg flex items-center gap-2">
-                  <Icon :icon="faFire" class="text-amber-400 text-sm" />
+                  <Icon :icon="faFire" class="text-k-highlight text-sm" />
                   Top Performing Songs
                 </h2>
                 <p class="text-xs text-k-fg-60">Tracks with the highest all-time streams</p>
@@ -254,7 +243,7 @@
               <button
                 v-if="overview.top_songs.length > 5"
                 type="button"
-                class="text-xs text-k-primary hover:underline font-semibold cursor-pointer"
+                class="text-xs text-k-highlight hover:underline font-semibold cursor-pointer"
                 @click="activeTab = 'top_songs'"
               >
                 View all tracks →
@@ -285,7 +274,7 @@
                 :key="song.id"
                 class="p-3.5 flex items-center gap-3.5 hover:bg-k-fg-5 transition-colors group"
               >
-                <span class="w-6 text-center font-bold text-xs tabular-nums text-k-fg-40 group-hover:text-k-primary">
+                <span class="w-6 text-center font-bold text-xs tabular-nums text-k-fg-40 group-hover:text-k-highlight">
                   #{{ idx + 1 }}
                 </span>
 
@@ -319,7 +308,7 @@
                 <div class="text-right shrink-0">
                   <div class="font-bold text-xs text-k-fg tabular-nums">{{ formatNumber(song.play_count) }} plays</div>
                   <div class="text-[11px] text-k-fg-40 mt-0.5 flex items-center justify-end gap-1">
-                    <Icon :icon="faHeart" class="text-[9px] text-rose-400" />
+                    <Icon :icon="faHeart" class="text-[9px] text-k-love" />
                     <span>{{ song.favorites_count }}</span>
                     <span class="mx-1">•</span>
                     <span>{{ secondsToHis(song.length) }}</span>
@@ -333,25 +322,18 @@
           <div class="lg:col-span-5 space-y-6">
             <!-- Pitch to Editors / Curators Banner -->
             <div
-              class="p-5 rounded-2xl bg-gradient-to-br from-indigo-900/40 via-purple-900/30 to-k-fg-5 border border-indigo-500/30 backdrop-blur-md relative overflow-hidden space-y-3"
+              class="p-5 rounded-2xl bg-k-fg-5 border border-k-fg-10 border-l-2 border-l-k-highlight relative overflow-hidden space-y-3"
             >
-              <div class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-indigo-400 animate-ping" />
-                <span class="text-xs font-bold uppercase tracking-wider text-indigo-300">
-                  Playlist Pitching &amp; Features
-                </span>
-              </div>
+              <span class="text-xs font-semibold uppercase tracking-wider text-k-highlight">
+                Playlist Pitching &amp; Features
+              </span>
               <h3 class="text-base font-bold text-k-fg leading-snug">Pitch New Releases to Curators</h3>
               <p class="text-xs text-k-fg-70 leading-relaxed">
                 Add rich metadata, cover art, and genre tags to your songs so server editors and community curators can
                 easily find and feature your tracks in official playlists.
               </p>
               <div class="pt-1">
-                <Btn
-                  variant="ghost"
-                  class="text-xs border border-indigo-400/30 text-indigo-300 hover:bg-indigo-500/20"
-                  @click="goToUpload"
-                >
+                <Btn variant="ghost" class="text-sm border border-k-fg-20 hover:bg-k-fg-10" @click="goToUpload">
                   Submit New Release
                 </Btn>
               </div>
@@ -362,7 +344,7 @@
               <div class="flex items-center justify-between">
                 <div>
                   <h3 class="text-sm font-bold text-k-fg flex items-center gap-1.5">
-                    <Icon :icon="faHeart" class="text-rose-400 text-xs" />
+                    <Icon :icon="faHeart" class="text-k-love text-xs" />
                     Top Active Fans
                   </h3>
                   <p class="text-[11px] text-k-fg-60">Listeners streaming your tracks the most</p>
@@ -370,7 +352,7 @@
                 <button
                   v-if="overview.top_listeners.length > 3"
                   type="button"
-                  class="text-xs text-k-primary hover:underline font-semibold cursor-pointer"
+                  class="text-xs text-k-highlight hover:underline font-semibold cursor-pointer"
                   @click="activeTab = 'audience'"
                 >
                   View all →
@@ -411,7 +393,7 @@
                   />
                   <div
                     v-else
-                    class="w-8 h-8 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-600 text-white font-bold text-xs flex items-center justify-center shrink-0 uppercase"
+                    class="w-8 h-8 rounded-full bg-k-fg-10 text-k-fg font-bold text-xs flex items-center justify-center shrink-0 uppercase"
                   >
                     {{ fan.name.charAt(0) }}
                   </div>
@@ -437,7 +419,7 @@
               <h2 class="text-lg font-bold text-k-fg">Music Releases (Albums &amp; Singles)</h2>
               <p class="text-xs text-k-fg-60">All albums, EPs, and collections published under your artist profile</p>
             </div>
-            <Btn class="btn-upload flex items-center gap-1.5" @click="goToUpload">
+            <Btn variant="highlight" class="btn-upload flex items-center gap-1.5" @click="goToUpload">
               <Icon :icon="faUpload" />
               <span>New Release</span>
             </Btn>
@@ -463,7 +445,7 @@
             <div
               v-for="album in overview.releases"
               :key="album.id"
-              class="group p-3 rounded-2xl bg-k-fg-5 border border-k-fg-10 hover:border-k-primary/40 hover:bg-k-fg-10 transition-all duration-200 cursor-pointer flex flex-col"
+              class="group p-3 rounded-2xl bg-k-fg-5 border border-k-fg-10 hover:border-k-highlight/40 hover:bg-k-fg-10 transition-all duration-200 cursor-pointer flex flex-col"
               @click="goToAlbum(album.id)"
             >
               <div class="aspect-square rounded-xl overflow-hidden bg-k-fg-10 relative mb-3 shadow-md group/cover">
@@ -492,7 +474,7 @@
                 </button>
               </div>
 
-              <h4 class="font-bold text-sm text-k-fg truncate group-hover:text-k-primary transition-colors">
+              <h4 class="font-bold text-sm text-k-fg truncate group-hover:text-k-highlight transition-colors">
                 {{ album.name }}
               </h4>
               <p class="text-xs text-k-fg-50 mt-0.5 flex items-center justify-between">
@@ -523,7 +505,7 @@
             </div>
             <h3 class="font-bold text-base text-k-fg">No songs recorded</h3>
             <p class="text-xs text-k-fg-50 max-w-sm mx-auto">Upload audio files to view detailed track performance.</p>
-            <Btn class="btn-upload" @click="goToUpload">Upload Music</Btn>
+            <Btn variant="highlight" class="btn-upload" @click="goToUpload">Upload Music</Btn>
           </div>
 
           <div v-else class="rounded-2xl bg-k-fg-5 border border-k-fg-10 overflow-hidden shadow-sm">
@@ -544,7 +526,7 @@
                     :key="song.id"
                     class="hover:bg-k-fg-5 transition-colors group"
                   >
-                    <td class="py-3 px-4 text-center font-bold text-k-fg-40 group-hover:text-k-primary">
+                    <td class="py-3 px-4 text-center font-bold text-k-fg-40 group-hover:text-k-highlight">
                       {{ idx + 1 }}
                     </td>
                     <td class="py-3 px-4">
@@ -572,7 +554,7 @@
                         </div>
                         <div class="min-w-0">
                           <div
-                            class="font-bold text-sm text-k-fg truncate group-hover:text-k-primary transition-colors"
+                            class="font-bold text-sm text-k-fg truncate group-hover:text-k-highlight transition-colors"
                           >
                             {{ song.title }}
                           </div>
@@ -586,7 +568,7 @@
                         <!-- Relative Stream Bar -->
                         <div class="flex-1 max-w-[100px] h-1.5 rounded-full bg-k-fg-10 overflow-hidden">
                           <div
-                            class="h-full bg-gradient-to-r from-sky-400 to-indigo-500 rounded-full"
+                            class="h-full bg-k-highlight rounded-full"
                             :style="{
                               width: `${Math.max(5, (song.play_count / Math.max(1, overview.top_songs[0]?.play_count || 1)) * 100)}%`,
                             }"
@@ -595,7 +577,7 @@
                       </div>
                     </td>
                     <td class="py-3 px-4 text-center">
-                      <span class="inline-flex items-center gap-1 font-semibold text-rose-400">
+                      <span class="inline-flex items-center gap-1 font-semibold text-k-love">
                         <Icon :icon="faHeart" class="text-[10px]" />
                         {{ song.favorites_count }}
                       </span>
@@ -639,7 +621,7 @@
             <div
               v-for="playlist in overview.playlist_appearances"
               :key="playlist.id"
-              class="p-4 rounded-2xl bg-k-fg-5 border border-k-fg-10 hover:border-k-primary/40 hover:bg-k-fg-10 transition-all duration-200 cursor-pointer flex items-center gap-4 group"
+              class="p-4 rounded-2xl bg-k-fg-5 border border-k-fg-10 hover:border-k-highlight/40 hover:bg-k-fg-10 transition-all duration-200 cursor-pointer flex items-center gap-4 group"
               @click="goToPlaylist(playlist.id)"
             >
               <div class="w-14 h-14 rounded-xl overflow-hidden bg-k-fg-10 shrink-0 shadow-md">
@@ -655,13 +637,13 @@
               </div>
 
               <div class="min-w-0 flex-1">
-                <h4 class="font-bold text-sm text-k-fg truncate group-hover:text-k-primary transition-colors">
+                <h4 class="font-bold text-sm text-k-fg truncate group-hover:text-k-highlight transition-colors">
                   {{ playlist.name }}
                 </h4>
                 <p class="text-xs text-k-fg-50 truncate mt-0.5">By {{ playlist.creator_name }}</p>
                 <div class="flex items-center gap-2 mt-1.5">
                   <span
-                    class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/25"
+                    class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-k-success/15 text-k-success border border-k-success/25"
                   >
                     {{ playlist.artist_tracks_count }} of your tracks
                   </span>
@@ -723,7 +705,7 @@
               />
               <div
                 v-else
-                class="w-11 h-11 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-600 text-white font-bold text-base flex items-center justify-center shrink-0 uppercase shadow-sm"
+                class="w-11 h-11 rounded-full bg-k-fg-10 text-k-fg font-bold text-base flex items-center justify-center shrink-0 uppercase shadow-sm"
               >
                 {{ fan.name.charAt(0) }}
               </div>
@@ -737,7 +719,7 @@
                       idx === 0
                         ? 'bg-amber-500/20 text-amber-300'
                         : idx < 3
-                          ? 'bg-indigo-500/20 text-indigo-300'
+                          ? 'bg-k-fg-10 text-k-fg-80'
                           : 'bg-k-fg-10 text-k-fg-60'
                     "
                   >
@@ -952,5 +934,22 @@ onBeforeUnmount(() => {
 
 .artist-studio-screen {
   @apply relative;
+}
+
+.studio-tab {
+  @apply shrink-0 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium bg-k-fg-5 text-k-fg-80
+    hover:bg-k-fg-10 hover:text-k-fg transition-colors duration-150 cursor-pointer;
+
+  &.active {
+    @apply bg-k-fg text-k-bg hover:bg-k-fg hover:text-k-bg;
+  }
+}
+
+.studio-tab-badge {
+  @apply min-w-5 px-1.5 rounded-full text-[0.7rem] font-semibold tabular-nums text-center bg-k-fg-10;
+
+  .active & {
+    @apply bg-k-bg/15;
+  }
 }
 </style>

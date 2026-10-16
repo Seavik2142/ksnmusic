@@ -1,16 +1,13 @@
 <template>
   <FooterButton
     :title
-    :class="[
-      'w-12! rounded-full aspect-square transition-all duration-300 text-2xl! has-[.icon-play]:indent-[0.23rem]',
-      playing
-        ? 'playing text-white bg-k-highlight border-2 border-k-highlight shadow-[0_0_20px_color-mix(in_srgb,var(--color-highlight),transparent_25%)] hover:scale-115 active:scale-95'
-        : 'border-2 border-solid border-k-fg-70 hover:border-k-highlight hover:text-k-highlight hover:scale-115 hover:shadow-[0_0_15px_color-mix(in_srgb,var(--color-highlight),transparent_50%)] active:scale-95',
-    ]"
+    class="play-btn flex items-center justify-center w-10 aspect-square rounded-full text-base bg-k-fg text-k-bg hover:text-k-bg hover:scale-105 active:scale-95 transition-transform duration-150 has-[.icon-play]:pl-0.5"
     @click.prevent="toggle"
   >
-    <Icon v-if="playing" :icon="faPause" />
-    <Icon v-else :icon="faPlay" class="icon-play" />
+    <Transition name="icon-swap" mode="out-in">
+      <Icon v-if="playing" :icon="faPause" />
+      <Icon v-else :icon="faPlay" class="icon-play" />
+    </Transition>
   </FooterButton>
 </template>
 
@@ -94,23 +91,20 @@ const toggle = async () => {
 </script>
 
 <style lang="postcss" scoped>
-@reference '@css/app.pcss';
-
-@keyframes play-glow-pulse {
-  0%,
-  100% {
-    box-shadow:
-      0 0 16px 2px color-mix(in srgb, var(--color-highlight), transparent 30%),
-      inset 0 0 10px rgba(255, 255, 255, 0.2);
-  }
-  50% {
-    box-shadow:
-      0 0 28px 6px color-mix(in srgb, var(--color-highlight), transparent 10%),
-      inset 0 0 14px rgba(255, 255, 255, 0.4);
-  }
+.icon-swap-enter-active,
+.icon-swap-leave-active {
+  transition:
+    opacity 0.12s var(--ease-standard),
+    transform 0.12s var(--ease-standard);
 }
 
-.playing {
-  animation: play-glow-pulse 2.4s ease-in-out infinite;
+.icon-swap-enter-from {
+  opacity: 0;
+  transform: scale(0.5) rotate(-90deg);
+}
+
+.icon-swap-leave-to {
+  opacity: 0;
+  transform: scale(0.5) rotate(90deg);
 }
 </style>

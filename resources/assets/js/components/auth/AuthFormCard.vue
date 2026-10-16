@@ -4,8 +4,8 @@
     class="w-[288px] sm:border duration-500 p-7 rounded-xl border border-k-fg-3 bg-linear-to-b from-k-fg-3 to-k-fg-5 space-y-3"
     @submit.prevent="$emit('submit')"
   >
-    <div class="text-center mb-8 -mt-28 flex justify-center">
-      <img alt="Logo" class="inline-block object-contain drop-shadow-md" :src="logo" width="200" />
+    <div class="text-center mb-10 -mt-[89px] flex justify-center">
+      <BrandLogo class="w-[150px] drop-shadow-md" />
     </div>
 
     <slot />
@@ -13,12 +13,10 @@
 </template>
 
 <script lang="ts" setup>
-import { useBranding } from '@/composables/useBranding'
+import BrandLogo from '@/components/ui/BrandLogo.vue'
 
 withDefaults(defineProps<{ failed?: boolean }>(), { failed: false })
 defineEmits<{ (e: 'submit'): void }>()
-
-const { logo } = useBranding()
 </script>
 
 <style lang="postcss" scoped>

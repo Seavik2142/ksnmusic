@@ -1,6 +1,6 @@
 <template>
-  <div class="extra-controls flex justify-end relative md:w-[420px] px-6 md:px-8 py-0">
-    <div class="flex justify-end items-center gap-6">
+  <div class="extra-controls flex justify-end relative md:w-[420px] px-6 py-0">
+    <div class="flex justify-end items-center gap-5 text-k-fg-60">
       <FooterQueueIcon />
 
       <FooterBtn
@@ -12,13 +12,7 @@
         <Icon :icon="faBolt" fixed-width />
       </FooterBtn>
 
-      <FooterBtn
-        v-if="useEqualizer"
-        :class="{ active: showEqualizer }"
-        class="equalizer"
-        title="Show equalizer"
-        @click.prevent="showEqualizer"
-      >
+      <FooterBtn v-if="useEqualizer" class="equalizer" title="Show equalizer" @click.prevent="showEqualizer">
         <AudioLinesIcon :size="16" />
       </FooterBtn>
 
@@ -73,29 +67,12 @@ onMounted(() => {
 @reference '@css/app.pcss';
 .extra-controls {
   button {
-    transition:
-      transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
-      color 0.2s ease;
-
-    &:hover {
-      transform: scale(1.15);
-      color: var(--color-highlight);
-    }
-
-    &:active {
-      transform: scale(0.9);
-    }
-  }
-
-  .visualizer-btn:hover {
-    filter: drop-shadow(0 0 6px var(--color-highlight));
+    @apply hover:text-k-fg active:scale-95 transition-[color,transform] duration-150;
   }
 
   :fullscreen & {
     @apply pr-0;
-  }
 
-  :fullscreen & {
     .visualizer-btn {
       @apply hidden;
     }

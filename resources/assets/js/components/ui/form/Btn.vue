@@ -4,7 +4,7 @@
     ref="button"
     :data-variant="variant"
     :data-size="size"
-    class="text-base text-white border border-transparent bg-k-primary px-3.5 py-2 rounded-sm cursor-pointer"
+    class="text-base font-medium text-white border border-transparent bg-k-primary px-4 py-2 rounded-full cursor-pointer transition-[box-shadow,transform] duration-150 active:scale-[0.98] disabled:active:scale-100"
     type="button"
   >
     <slot>Click me</slot>
@@ -14,7 +14,7 @@
     ref="button"
     :data-variant="variant"
     :data-size="size"
-    class="text-base text-white border border-transparent bg-k-primary px-3.5 py-2 rounded-sm cursor-pointer"
+    class="text-base font-medium text-white border border-transparent bg-k-primary px-4 py-2 rounded-full cursor-pointer transition-[box-shadow,transform] duration-150 active:scale-[0.98] disabled:active:scale-100"
   >
     <slot>Click me</slot>
   </a>

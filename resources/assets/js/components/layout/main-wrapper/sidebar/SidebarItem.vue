@@ -1,16 +1,12 @@
 <template>
-  <li
-    :class="{ active }"
-    class="relative before:right-0 px-6 before:top-1/4 before:w-[4px] before:h-1/2 before:absolute before:rounded-full before:transition-[box-shadow-sm,background-color] before:ease-in-out before:duration-500"
-    data-testid="sidebar-item"
-  >
+  <li :class="{ active }" class="relative px-3" data-testid="sidebar-item">
     <a
       :href="props.href"
-      class="flex items-center overflow-x-hidden gap-3 h-11 relative active:pt-0.5 active:pr-0 active:pb-0 active:pl-0.5 text-k-fg-70 hover:text-k-fg"
+      class="flex items-center overflow-x-hidden gap-3 h-10 px-3 relative rounded-lg text-k-fg-70 hover:text-k-fg hover:bg-k-fg-5 active:bg-k-fg-10 transition-colors duration-150"
       @click.prevent="onClick"
       @dblclick.prevent="onDblClick"
     >
-      <span>
+      <span class="icon flex w-5 justify-center shrink-0">
         <slot name="icon" />
       </span>
 
@@ -72,14 +68,39 @@ const onDblClick = () => {
 
 <style lang="postcss" scoped>
 @reference '@css/app.pcss';
-li.active {
-  a {
-    @apply text-k-fg;
-  }
+
+.icon {
+  transition:
+    transform 0.25s var(--ease-out),
+    color 0.15s var(--ease-standard);
+}
+
+a:hover .icon {
+  transform: scale(1.15);
+}
+
+li.active a {
+  @apply text-k-fg font-medium bg-k-fg-10;
 
   &::before {
-    @apply bg-k-highlight;
-    box-shadow: 0 0 40px 10px var(--color-highlight);
+    @apply content-[''] absolute left-0 top-1/2 h-5 w-[3px] -mt-2.5 rounded-full bg-k-highlight;
+    animation: active-indicator-in 0.35s var(--ease-out);
+  }
+
+  .icon {
+    @apply text-k-highlight;
+  }
+}
+
+@keyframes active-indicator-in {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+
+  to {
+    transform: scaleY(1);
+    opacity: 1;
   }
 }
 </style>

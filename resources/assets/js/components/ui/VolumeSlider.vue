@@ -78,29 +78,29 @@ onMounted(() => volumeManager.init(inputEl.value!, preferenceStore.volume))
 }
 
 .volume-slider[type='range']::-webkit-slider-runnable-track {
-  height: 6px;
+  height: 4px;
   border: 0;
-  border-radius: 3px;
-  @apply bg-k-fg-10;
+  border-radius: 2px;
+  @apply bg-k-fg-20;
 }
 
 .volume-slider[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
-  margin-top: -3px;
+  margin-top: -4px;
   height: 12px;
   width: 12px;
   border: 0;
   border-radius: 100%;
-  transition: background 0.3s ease;
+  transition: background 0.15s ease;
   cursor: ew-resize;
-  @apply bg-k-fg-70;
+  @apply bg-k-fg-80;
 }
 
 .volume-slider[type='range']::-moz-range-track {
-  height: 6px;
+  height: 4px;
   border: 0;
-  border-radius: 3px;
-  @apply bg-k-fg-10;
+  border-radius: 2px;
+  @apply bg-k-fg-20;
 }
 
 .volume-slider[type='range']::-moz-range-thumb {
@@ -108,9 +108,9 @@ onMounted(() => volumeManager.init(inputEl.value!, preferenceStore.volume))
   width: 12px;
   border: 0;
   border-radius: 100%;
-  transition: background 0.3s ease;
+  transition: background 0.15s ease;
   cursor: ew-resize;
-  @apply bg-k-fg-70;
+  @apply bg-k-fg-80;
 }
 
 #volume {

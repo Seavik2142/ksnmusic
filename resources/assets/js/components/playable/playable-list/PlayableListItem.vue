@@ -150,10 +150,13 @@ article {
 
   &.playing {
     .title,
-    .track-number,
-    .favorite {
+    .track-number {
       @apply text-k-highlight;
     }
+  }
+
+  .extra {
+    @apply opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 no-hover:opacity-100 transition-opacity;
   }
 
   .title-artist {

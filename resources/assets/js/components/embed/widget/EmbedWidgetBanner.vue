@@ -18,23 +18,21 @@
       <slot name="audio-player" />
     </div>
 
-    <span class="absolute right-3 top-3 size-10 p-1 bg-k-fg-10 rounded-md">
-      <img :src="logo" alt="Koel's logo" />
+    <span class="absolute right-3 top-3 size-10 p-1 bg-k-fg-10 rounded-md flex items-center justify-center">
+      <BrandLogo class="w-full max-h-full" />
     </span>
   </header>
 </template>
 
 <script setup lang="ts">
 import { getPlayableProp } from '@/utils/helpers'
-import { useBranding } from '@/composables/useBranding'
 
 import Thumbnail from '@/components/embed/widget/EmbedWidgetThumbnail.vue'
 import PreviewBadge from '@/components/embed/widget/PreviewBadge.vue'
+import BrandLogo from '@/components/ui/BrandLogo.vue'
 
 const props = defineProps<{ embed: WidgetReadyEmbed; options: EmbedOptions }>()
 const { embed, options } = props
-
-const { logo } = useBranding()
 
 let heading: string
 let subheading: string

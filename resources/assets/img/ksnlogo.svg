@@ -1,50 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 80" width="100%" height="100%">
-  <defs>
-    <linearGradient id="ksn-audio-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#38bdf8" />
-      <stop offset="50%" stop-color="#818cf8" />
-      <stop offset="100%" stop-color="#f43f5e" />
-    </linearGradient>
-    <linearGradient id="ksn-bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#181a24" />
-      <stop offset="100%" stop-color="#0a0b10" />
-    </linearGradient>
-    <filter id="subtle-glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#818cf8" flood-opacity="0.4" />
-    </filter>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 176" class="ksn-logo" role="img" aria-label="KSN Music">
+  <title>KSN Music</title>
+  <style>
+    .ksn-logo {
+      --ksn-logo-mark: #ffffff;
+      --ksn-logo-accent: #db252a;
+    }
 
-  <!-- App Icon Mark -->
-  <g filter="url(#subtle-glow)">
-    <rect x="6" y="6" width="68" height="68" rx="19" 
-          fill="url(#ksn-bg-grad)" 
-          stroke="url(#ksn-audio-grad)" 
-          stroke-width="2" />
-    
-    <!-- Equalizer Waves -->
-    <g transform="translate(19, 20)">
-      <rect x="0" y="12" width="5.5" height="16" rx="2.75" fill="#38bdf8" />
-      <rect x="9" y="4" width="5.5" height="32" rx="2.75" fill="url(#ksn-audio-grad)" />
-      <rect x="18" y="0" width="5.5" height="40" rx="2.75" fill="url(#ksn-audio-grad)" />
-      <rect x="27" y="8" width="5.5" height="24" rx="2.75" fill="#818cf8" />
-      <rect x="36" y="15" width="5.5" height="10" rx="2.75" fill="#f43f5e" />
-    </g>
-  </g>
+    @media (prefers-color-scheme: light) {
+      .ksn-logo {
+        --ksn-logo-mark: #141414;
+        --ksn-logo-accent: #d7262d;
+      }
+    }
 
-  <!-- Wordmark -->
-  <g transform="translate(88, 0)">
-    <text x="0" y="48" 
-          font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif" 
-          font-size="42" 
-          font-weight="900" 
-          letter-spacing="2" 
-          fill="url(#ksn-audio-grad)">KSN</text>
+    .ksn-logo-mark {
+      fill: var(--ksn-logo-mark);
+    }
 
-    <text x="2" y="68" 
-          font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif" 
-          font-size="12" 
-          font-weight="700" 
-          letter-spacing="5" 
-          fill="#94a3b8">MUSIC</text>
-  </g>
+    .ksn-logo-accent {
+      fill: var(--ksn-logo-accent);
+    }
+  </style>
+  <path class="ksn-logo-mark" d="M236.2 11.4L288.0 11.4L288.0 11.9L272.0 39.7L162.0 39.7L161.7 40.2L169.0 52.4L264.9 52.4L248.9 80.2L152.3 80.2L113.4 11.7ZM99.8 11.7L115.6 40.2L84.9 93.4L102.6 93.6L124.5 55.7L140.3 83.0L139.1 86.1L126.6 107.8L153.0 153.5L159.1 165.3L127.3 165.0L102.4 121.9L68.7 121.9L64.9 127.6L49.8 153.9L34.5 124.3ZM301.6 11.7L324.5 52.0L324.5 113.2L325.2 113.0L342.2 83.5L358.6 111.5L329.7 162.4L327.8 165.3L297.2 165.0L297.2 76.7L296.7 76.5L246.1 164.5L245.3 165.3L213.8 165.3Z"/>
+  <path class="ksn-logo-accent" d="M213.8 85.2L245.8 85.2L245.8 85.6L200.4 164.5L159.4 92.9L191.9 92.9L200.8 108.0ZM147.6 96.2L186.9 164.3L186.9 165.3L174.2 165.3L173.5 164.5L141.7 109.4L141.0 107.1ZM365.5 124.5L388.3 163.6L388.8 165.3L342.6 165.0ZM31.0 130.6L45.8 159.6L45.8 160.5L43.0 165.0L11.4 165.0Z"/>
 </svg>

@@ -1,6 +1,6 @@
 <template>
   <button
-    :class="size"
+    :class="[size, { artist: !forAlbum }]"
     :style="{ backgroundImage: `url(${defaultCover})` }"
     class="thumbnail group relative w-full aspect-square bg-no-repeat bg-cover bg-center overflow-hidden active:scale-95"
     data-testid="album-artist-thumbnail"
@@ -69,6 +69,10 @@ const playOrQueue = async (event: MouseEvent) => {
 
 .thumbnail.lg {
   @apply rounded-xl;
+}
+
+.thumbnail.artist {
+  @apply rounded-full;
 }
 
 .droppable {

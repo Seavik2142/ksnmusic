@@ -8,16 +8,32 @@
 
     <ParagraphSkeleton v-if="loading" role="status" aria-busy="true" aria-label="Loading" />
 
-    <div v-if="!loading && info?.bio" v-html="info.bio.full" />
+    <div v-else-if="hasBio" class="bio" v-html="info!.bio!.full" />
 
-    <template v-if="info && !loading" #footer>
-      <a :href="info.url" rel="openener" target="_blank">Source</a>
+    <div
+      v-else
+      class="empty flex flex-col items-center text-center gap-2 py-12 text-k-fg-60"
+      data-testid="artist-info-empty"
+    >
+      <span class="size-14 mb-2 flex items-center justify-center rounded-full bg-k-fg-5 text-xl text-k-fg-50">
+        <Icon :icon="faMicrophone" />
+      </span>
+      <p class="text-k-fg font-semibold">No biography yet</p>
+      <p class="text-sm max-w-sm">There's no information about {{ artist.name }} available right now.</p>
+    </div>
+
+    <template v-if="hasBio && info?.url" #footer>
+      <a :href="info.url" rel="noopener noreferrer" target="_blank" class="source-link">
+        Source
+        <Icon :icon="faArrowUpRightFromSquare" class="text-[0.7em]" />
+      </a>
     </template>
   </AlbumArtistInfo>
 </template>
 
 <script lang="ts" setup>
-import { ref, toRefs, watch } from 'vue'
+import { faArrowUpRightFromSquare, faMicrophone } from '@fortawesome/free-solid-svg-icons'
+import { computed, ref, toRefs, watch } from 'vue'
 import { encyclopediaService } from '@/services/encyclopediaService'
 import { useThirdPartyServices } from '@/composables/useThirdPartyServices'
 
@@ -32,6 +48,7 @@ const { useMusicBrainz, useLastfm, useSpotify } = useThirdPartyServices()
 
 const loading = ref(false)
 const info = ref<ArtistInfo | null>(null)
+const hasBio = computed(() => Boolean(info.value?.bio?.full?.trim()))
 
 watch(
   artist,
@@ -52,5 +69,17 @@ watch(
 @reference '@css/app.pcss';
 :deep(.play-icon) {
   @apply scale-[3];
+}
+
+.full .bio {
+  @apply max-w-3xl text-[0.95rem] leading-relaxed text-k-fg-80;
+}
+
+.full .bio :deep(p + p) {
+  @apply mt-4;
+}
+
+.source-link {
+  @apply inline-flex items-center gap-1.5 text-sm text-k-fg-60 hover:text-k-fg hover:underline underline-offset-2;
 }
 </style>

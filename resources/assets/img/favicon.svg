@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -112 400 400" class="ksn-logo" role="img" aria-label="KSN Music">
+  <title>KSN Music</title>
+  <style>
+    .ksn-logo {
+      --ksn-logo-mark: #ffffff;
+      --ksn-logo-accent: #db252a;
+    }
+
+    @media (prefers-color-scheme: light) {
+      .ksn-logo {
+        --ksn-logo-mark: #141414;
+        --ksn-logo-accent: #d7262d;
+      }
+    }
+
+    .ksn-logo-mark {
+      fill: var(--ksn-logo-mark);
+    }
+
+    .ksn-logo-accent {
+      fill: var(--ksn-logo-accent);
+    }
+  </style>
+  <path class="ksn-logo-mark" d="M236.2 11.4L288.0 11.4L288.0 11.9L272.0 39.7L162.0 39.7L161.7 40.2L169.0 52.4L264.9 52.4L248.9 80.2L152.3 80.2L113.4 11.7ZM99.8 11.7L115.6 40.2L84.9 93.4L102.6 93.6L124.5 55.7L140.3 83.0L139.1 86.1L126.6 107.8L153.0 153.5L159.1 165.3L127.3 165.0L102.4 121.9L68.7 121.9L64.9 127.6L49.8 153.9L34.5 124.3ZM301.6 11.7L324.5 52.0L324.5 113.2L325.2 113.0L342.2 83.5L358.6 111.5L329.7 162.4L327.8 165.3L297.2 165.0L297.2 76.7L296.7 76.5L246.1 164.5L245.3 165.3L213.8 165.3Z"/>
+  <path class="ksn-logo-accent" d="M213.8 85.2L245.8 85.2L245.8 85.6L200.4 164.5L159.4 92.9L191.9 92.9L200.8 108.0ZM147.6 96.2L186.9 164.3L186.9 165.3L174.2 165.3L173.5 164.5L141.7 109.4L141.0 107.1ZM365.5 124.5L388.3 163.6L388.8 165.3L342.6 165.0ZM31.0 130.6L45.8 159.6L45.8 160.5L43.0 165.0L11.4 165.0Z"/>
+</svg>

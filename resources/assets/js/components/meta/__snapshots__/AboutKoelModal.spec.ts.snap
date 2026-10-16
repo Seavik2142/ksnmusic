@@ -11,7 +11,7 @@ exports[`aboutKoelModal.vue > renders 1`] = `
     <p data-v-6b5b01a9="" class="author my-4 text-k-fg-70 text-sm leading-relaxed"> This is created my Team start Up builder from Norton University Manager Mao Seavik - Kea somneang. Contact me if you want about full concept. </p>
     <!--v-if-->
   </main>
-  <footer data-v-6b5b01a9=""><button data-v-8943c846="" data-v-6b5b01a9="" data-variant="destructive" class="text-base text-white border border-transparent bg-k-primary px-3.5 py-2 rounded-sm cursor-pointer" type="button" data-testid="close-modal-btn" rounded="">Close</button></footer>
+  <footer data-v-6b5b01a9=""><button data-v-8943c846="" data-v-6b5b01a9="" data-variant="destructive" class="text-base font-medium text-white border border-transparent bg-k-primary px-4 py-2 rounded-full cursor-pointer transition-[box-shadow,transform] duration-150 active:scale-[0.98] disabled:active:scale-100" type="button" data-testid="close-modal-btn" rounded="">Close</button></footer>
 </div>
 `;
 
@@ -25,6 +25,6 @@ exports[`aboutKoelModal.vue > renders with custom branding 1`] = `
     <p data-v-6b5b01a9="" class="author my-4 text-k-fg-70 text-sm leading-relaxed"> This is created my Team start Up builder from Norton University Manager Mao Seavik - Kea somneang. Contact me if you want about full concept. </p>
     <!--v-if-->
   </main>
-  <footer data-v-6b5b01a9=""><button data-v-8943c846="" data-v-6b5b01a9="" data-variant="destructive" class="text-base text-white border border-transparent bg-k-primary px-3.5 py-2 rounded-sm cursor-pointer" type="button" data-testid="close-modal-btn" rounded="">Close</button></footer>
+  <footer data-v-6b5b01a9=""><button data-v-8943c846="" data-v-6b5b01a9="" data-variant="destructive" class="text-base font-medium text-white border border-transparent bg-k-primary px-4 py-2 rounded-full cursor-pointer transition-[box-shadow,transform] duration-150 active:scale-[0.98] disabled:active:scale-100" type="button" data-testid="close-modal-btn" rounded="">Close</button></footer>
 </div>
 `;
