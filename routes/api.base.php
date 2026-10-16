@@ -85,6 +85,8 @@ use App\Http\Controllers\API\Settings\UpdateBrandingController;
 use App\Http\Controllers\API\Settings\UpdateMediaPathController;
 use App\Http\Controllers\API\SongController;
 use App\Http\Controllers\API\SongSearchController;
+use App\Http\Controllers\API\Store\UpdateAlbumPriceController;
+use App\Http\Controllers\API\Store\UpdateSongPriceController;
 use App\Http\Controllers\API\ThemeController;
 use App\Http\Controllers\API\ToggleLikeSongController;
 use App\Http\Controllers\API\UnlikeMultipleSongsController;
@@ -211,6 +213,10 @@ Route::prefix('api')
 
             Route::put('songs/{song}/rating', RateSongController::class)->where(['song' => Uuid::REGEX]);
             Route::put('albums/{album}/rating', RateAlbumController::class);
+
+            Route::put('songs/{song}/price', UpdateSongPriceController::class)->where(['song' => Uuid::REGEX]);
+            Route::put('albums/{album}/price', UpdateAlbumPriceController::class);
+
             Route::put('artists/{artist}/rating', RateArtistController::class);
             Route::put('podcasts/{podcast}/rating', RatePodcastController::class)->where([
                 'podcast' => Uuid::REGEX,

@@ -31,6 +31,7 @@ use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 /**
+ * @property ?int $price_cents The album's bundle price in cents, or null if it isn't sold as a bundle
  * @property ?boolean $favorite Whether the album is liked by the scoped user
  * @property ?Carbon $favorited_at When the scoped user favorited the album, if at all
  * @property ?Carbon $last_played_at When the scoped user last played the album, if at all
@@ -81,6 +82,7 @@ class Album extends Model implements AuditableContract, Embeddable, Favoriteable
             'favorite' => 'boolean',
             'favorited_at' => 'datetime',
             'last_played_at' => 'datetime',
+            'price_cents' => 'int',
         ];
     }
 
@@ -118,6 +120,11 @@ class Album extends Model implements AuditableContract, Embeddable, Favoriteable
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function isForSale(): bool
+    {
+        return $this->price_cents > 0;
     }
 
     public function belongsToUser(User $user): bool
