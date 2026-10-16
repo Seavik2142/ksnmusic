@@ -8,6 +8,7 @@ use App\Models\Setting;
 use App\Services\Image\ImageStorage;
 use App\Values\AiSettings;
 use App\Values\Branding;
+use App\Values\Store\StoreSettings;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Crypt;
@@ -26,6 +27,19 @@ class SettingService
         return License::isPlus()
             ? Branding::fromArray(Arr::wrap(Setting::get('branding', $organization)))
             : Branding::make(name: config('app.name'));
+    }
+
+    public function getStoreSettings(Organization $organization): StoreSettings
+    {
+        return StoreSettings::fromArray(
+            Arr::wrap(Setting::get('store', $organization)),
+            (int) config('koel.store.commission_percent'),
+        );
+    }
+
+    public function updateStoreSettings(Organization $organization, StoreSettings $settings): void
+    {
+        Setting::set('store', $settings->toArray(), $organization);
     }
 
     public function getAiSettings(Organization $organization): AiSettings

@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property ?int $seller_id
  * @property Order $order
  * @property string $purchasable_type
- * @property Song|Album $purchasable
+ * @property Song|Album|null $purchasable The item sold, unless it has since been deleted
  * @property int $amount_cents
  * @property int $commission_cents
  * @property int $id

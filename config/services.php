@@ -36,6 +36,22 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'paypal' => [
+        'client_id' => env('PAYPAL_CLIENT_ID'),
+        'client_secret' => env('PAYPAL_CLIENT_SECRET'),
+        'sandbox' => env('PAYPAL_SANDBOX', true),
+    ],
+
+    'payway' => [
+        'merchant_id' => env('PAYWAY_MERCHANT_ID'),
+        'api_key' => env('PAYWAY_API_KEY'),
+        'sandbox' => env('PAYWAY_SANDBOX', true),
+        'payment_options' => [
+            'khqr' => env('PAYWAY_KHQR_PAYMENT_OPTION', 'abapay_khqr'),
+            'card' => env('PAYWAY_CARD_PAYMENT_OPTION', 'cards'),
+        ],
+    ],
+
     'oidc' => [
         'issuer' => env('SSO_OIDC_ISSUER'),
         'client_id' => env('SSO_OIDC_CLIENT_ID'),
