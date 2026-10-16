@@ -112,6 +112,19 @@ export const routes = [
     screen: 'Visualizer',
   },
   {
+    name: 'purchases',
+    path: '/purchases',
+    screen: 'Purchases',
+  },
+  {
+    name: 'store.orders.show',
+    path: '/store/orders/:id',
+    screen: 'Order',
+    constraints: {
+      id: ULID_REGEX,
+    },
+  },
+  {
     name: 'albums.show',
     path: '/albums/:id/:tab?',
     screen: 'Album',

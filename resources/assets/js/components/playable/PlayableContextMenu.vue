@@ -46,6 +46,10 @@
         </template>
       </MenuItem>
     </template>
+    <template v-if="songsToBuy.length">
+      <MenuItem data-testid="buy-songs" @click="buySongs">{{ buyLabel }}</MenuItem>
+      <Separator />
+    </template>
     <MenuItem>
       Add To
       <template #subMenuItems>
@@ -157,7 +161,7 @@ import {
 import { MicVocalIcon } from 'lucide-vue-next'
 import { computed, toRef, toRefs } from 'vue'
 import { defineAsyncComponent } from '@/utils/helpers'
-import { pluralize } from '@/utils/formatters'
+import { formatPrice, pluralize } from '@/utils/formatters'
 import { eventBus } from '@/utils/eventBus'
 import { copyText } from '@/utils/helpers'
 import { getPlayableCollectionContentType, isSong } from '@/utils/typeGuards'
@@ -179,6 +183,7 @@ import { useModal } from '@/composables/useModal'
 import { useKoelPlus } from '@/composables/useKoelPlus'
 import { useOfflinePlayback } from '@/composables/useOfflinePlayback'
 import { playback } from '@/services/playbackManager'
+import { storeService } from '@/services/storeService'
 
 import StarRating from '@/components/ui/StarRating.vue'
 
@@ -192,6 +197,7 @@ const EditSongForm = defineAsyncComponent(() => import('@/components/playable/Ed
 const EditAlbumForm = defineAsyncComponent(() => import('@/components/album/EditAlbumForm.vue'))
 const CreateEmbedForm = defineAsyncComponent(() => import('@/components/embed/CreateEmbedForm.vue'))
 const MoveSongToAlbumModal = defineAsyncComponent(() => import('@/components/playable/MoveSongToAlbumModal.vue'))
+const CheckoutModal = defineAsyncComponent(() => import('@/components/store/CheckoutModal.vue'))
 
 const { MenuItem, Separator, closeContextMenu, trigger } = useContextMenu()
 const { openModal } = useModal()
@@ -228,6 +234,18 @@ const { currentUserCan } = usePolicies()
 const contentType = computed(() => getPlayableCollectionContentType(playables.value))
 const allowEdit = computed(() => contentType.value === 'songs' && currentUserCan.editSong(playables.value as Song[]))
 const onlyOneSelected = computed(() => playables.value.length === 1)
+
+const songsToBuy = computed(() =>
+  playables.value.filter((playable): playable is Song => isSong(playable) && Boolean(playable.preview_only)),
+)
+
+const buyLabel = computed(() => {
+  const total = formatPrice(storeService.totalOf(songsToBuy.value), commonStore.state.store.currency)
+
+  return songsToBuy.value.length === 1 ? `Buy for ${total}` : `Buy ${songsToBuy.value.length} Songs for ${total}`
+})
+
+const buySongs = () => trigger(() => openModal<'CHECKOUT'>(CheckoutModal, { items: songsToBuy.value }))
 
 const { useMusicBrainz } = useThirdPartyServices()
 
@@ -394,7 +412,7 @@ const { fromPlayables } = useDownload()
 const download = () => trigger(() => fromPlayables(playables.value))
 
 const { swReady, makeAvailableOffline, removeOfflineCache, isCached } = useOfflinePlayback()
-const canToggleOffline = computed(() => contentType.value === 'songs' && swReady.value)
+const canToggleOffline = computed(() => contentType.value === 'songs' && swReady.value && !songsToBuy.value.length)
 const allCached = computed(() => playables.value.every(p => isCached(p)))
 
 const toggleOffline = () =>

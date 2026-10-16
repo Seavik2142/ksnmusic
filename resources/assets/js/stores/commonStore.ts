@@ -50,6 +50,11 @@ const initialState = {
     playback_position: 0,
   } as QueueState,
   supports_batch_downloading: false,
+  store: {
+    payment_providers: [] as PaymentProvider[],
+    currency: 'USD',
+    preview_seconds: 30,
+  },
   supports_transcoding: false,
   dir_separator: '/',
   current_theme: null! as Theme,

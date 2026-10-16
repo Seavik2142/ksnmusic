@@ -86,6 +86,7 @@ use App\Http\Controllers\API\Settings\UpdateMediaPathController;
 use App\Http\Controllers\API\SongController;
 use App\Http\Controllers\API\SongSearchController;
 use App\Http\Controllers\API\Store\CheckoutController;
+use App\Http\Controllers\API\Store\FetchPurchasesController;
 use App\Http\Controllers\API\Store\ShowOrderController;
 use App\Http\Controllers\API\Store\UpdateAlbumPriceController;
 use App\Http\Controllers\API\Store\UpdateSongPriceController;
@@ -225,6 +226,7 @@ Route::prefix('api')
             Route::put('albums/{album}/price', UpdateAlbumPriceController::class);
             Route::post('store/orders', CheckoutController::class)->middleware('throttle:20,1');
             Route::get('store/orders/{order}', ShowOrderController::class);
+            Route::get('store/purchases', FetchPurchasesController::class);
 
             Route::put('artists/{artist}/rating', RateArtistController::class);
             Route::put('podcasts/{podcast}/rating', RatePodcastController::class)->where([

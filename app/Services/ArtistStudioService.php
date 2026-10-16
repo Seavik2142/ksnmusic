@@ -80,7 +80,7 @@ class ArtistStudioService
     public function getAccessibleArtists(User $user): Collection
     {
         if ($user->hasRole(Role::ADMIN) || $user->hasRole(Role::MANAGER)) {
-            return Artist::query()
+            return collect(Artist::query() // @phpstan-ignore return.type
                 ->onlyStandard()
                 ->orderBy('name')
                 ->get()
@@ -88,7 +88,7 @@ class ArtistStudioService
                     'id' => $artist->id,
                     'name' => $artist->name,
                     'image' => image_storage_url($artist->image),
-                ]);
+                ]));
         }
 
         $primaryArtist = $this->resolveArtistForUser($user);
@@ -97,7 +97,7 @@ class ArtistStudioService
             return collect();
         }
 
-        return collect([[
+        return collect([[ // @phpstan-ignore return.type
             'id' => $primaryArtist->id,
             'name' => $primaryArtist->name,
             'image' => image_storage_url($primaryArtist->image),
@@ -166,7 +166,7 @@ class ArtistStudioService
                     'length' => $song->length,
                     'play_count' => (int) ($topSongStats[$song->id] ?? 0),
                     'favorites_count' => (int) ($songFavorites[$song->id] ?? 0),
-                    'created_at' => $song->created_at?->toIso8601String(),
+                    'created_at' => $song->created_at->toIso8601String(),
                 ];
             })
             ->sortByDesc('play_count')
@@ -194,7 +194,7 @@ class ArtistStudioService
                     'year' => $album->year,
                     'track_count' => $album->songs_count,
                     'total_plays' => $albumPlays,
-                    'created_at' => $album->created_at?->toIso8601String(),
+                    'created_at' => $album->created_at->toIso8601String(),
                 ];
             })
             ->sortByDesc('created_at')
@@ -215,15 +215,16 @@ class ArtistStudioService
             ->limit(10)
             ->get()
             ->map(static function (Playlist $playlist): array {
-                $ownerName = $playlist->users->firstWhere('pivot.role', 'owner')?->name ?? 'Community';
+                /** @var User|null $owner */
+                $owner = $playlist->users->firstWhere('pivot.role', 'owner');
 
                 return [
                     'id' => $playlist->id,
                     'name' => $playlist->name,
-                    'creator_name' => $ownerName,
+                    'creator_name' => $owner->name ?? 'Community',
                     'cover' => image_storage_url($playlist->cover),
                     'songs_count' => (int) $playlist->playables_count,
-                    'artist_tracks_count' => (int) $playlist->artist_tracks_count,
+                    'artist_tracks_count' => (int) $playlist->getAttribute('artist_tracks_count'),
                 ];
             })
             ->all();
@@ -236,11 +237,14 @@ class ArtistStudioService
             ->orderByDesc('total_plays')
             ->limit(10)
             ->get()
-            ->map(static function (object $row): array {
+            ->map(static function (\stdClass $row): array {
+                /** @var User|null $user */
+                $user = User::query()->find($row->id);
+
                 return [
                     'id' => (int) $row->id,
                     'name' => (string) $row->name,
-                    'avatar' => User::query()->find($row->id)?->avatar ?? '',
+                    'avatar' => $user->avatar ?? '',
                     'play_count' => (int) $row->total_plays,
                     'last_played_at' => $row->last_played_at ? Carbon::parse($row->last_played_at)->toIso8601String() : null,
                 ];

@@ -35,32 +35,28 @@ class AlbumPolicy
             return false;
         }
 
-        if ($user->hasRole(Role::ADMIN) || $user->hasRole(Role::MANAGER)) {
+        if ($album->belongsToUser($user)) {
             return true;
         }
 
-        if ($album->belongsToUser($user)) {
-            return true;
+        if (License::isCommunity()) {
+            return $user->hasRole(Role::ADMIN)
+                || $user->hasRole(Role::MANAGER)
+                || $user->hasPermissionTo(Permission::MANAGE_SONGS);
         }
 
         if (
             $user->hasRole(Role::ARTIST)
             && (
                 $album->artist_name === $user->name
-                || $album->artist?->name === $user->name
+                || $album->artist->name === $user->name
                 || $album->songs()->where('owner_id', $user->id)->exists()
             )
         ) {
             return true;
         }
 
-        // For CE, if the user can manage songs, they can update any album.
-        if ($user->hasPermissionTo(Permission::MANAGE_SONGS) && License::isCommunity()) {
-            return true;
-        }
-
-        // For Plus, only the owner of the album can update it.
-        return $album->belongsToUser($user) && License::isPlus();
+        return false;
     }
 
     public function edit(User $user, Album $album): bool

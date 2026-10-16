@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Enums\Acl\Permission;
+use App\Enums\Store\PaymentProvider;
 use App\Facades\License;
 use App\Hooks\Filter;
 use App\Http\Controllers\Controller;
@@ -27,6 +28,7 @@ use App\Services\Integrations\TicketmasterService;
 use App\Services\Integrations\YouTubeService;
 use App\Services\License\Contracts\LicenseServiceInterface;
 use App\Services\MediaBrowser;
+use App\Services\Payments\PaymentGatewayResolver;
 use App\Services\QueueService;
 use App\Services\SettingService;
 use App\Services\SongStorages\Contracts\IssuesPresignedUploadUrls;
@@ -45,6 +47,7 @@ class FetchInitialDataController extends Controller
         ThemeRepository $themeRepository,
         LicenseServiceInterface $licenseService,
         SettingService $settingService,
+        PaymentGatewayResolver $paymentGatewayResolver,
         Authenticatable $user,
     ) {
         $licenseStatus = $licenseService->getStatus();
@@ -80,6 +83,14 @@ class FetchInitialDataController extends Controller
             'uses_podcasts' => (bool) config('koel.podcasts.enabled'),
             'uses_radio' => (bool) config('koel.radio.enabled'),
             'supports_batch_downloading' => extension_loaded('zip'),
+            'store' => [
+                'payment_providers' => array_map(
+                    static fn (PaymentProvider $provider): string => $provider->value,
+                    $paymentGatewayResolver->configuredProviders(),
+                ),
+                'currency' => config('koel.store.currency'),
+                'preview_seconds' => (int) config('koel.store.preview_seconds'),
+            ],
             'media_path_set' => (bool) Setting::get('media_path'),
             'supports_transcoding' =>
                 config('koel.streaming.ffmpeg_path') && is_executable(config('koel.streaming.ffmpeg_path')),

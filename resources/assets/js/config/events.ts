@@ -11,6 +11,8 @@ export interface Events {
   FULLSCREEN_TOGGLE: () => void
   PLAYBACK_STARTED: (playable: Playable) => void
   UP_NEXT: (playable: Playable | null) => void
+  PREVIEW_ENDED: (song: Song) => void
+  ORDER_PAID: (order: StoreOrder) => void
 
   PLAYLIST_DELETED: (playlist: Playlist) => void
   PLAYLIST_CONTENT_REMOVED: (playlist: Playlist, playables: Playable[]) => void

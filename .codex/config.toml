@@ -1,0 +1,6 @@
+# nami:connections start
+[mcp_servers.notion]
+command = "npx"
+args = ["-y", "@notionhq/notion-mcp-server"]
+
+# nami:connections end
