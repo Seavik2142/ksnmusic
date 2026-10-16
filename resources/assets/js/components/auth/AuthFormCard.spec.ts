@@ -9,7 +9,7 @@ describe('authFormCard.vue', () => {
   it('renders the logo and the slotted body', () => {
     h.render(Component, { slots: { default: '<p>Body content</p>' } })
 
-    screen.getByAltText('Logo')
+    screen.getByRole('img')
     screen.getByText('Body content')
   })
 })

@@ -3,8 +3,18 @@
     <template #header>
       <ScreenHeaderSkeleton v-if="loading && !artist" role="status" aria-busy="true" aria-label="Loading" />
 
-      <ScreenHeader v-if="artist" :disabled="loading" :layout="songs.length ? headerLayout : 'expanded'">
+      <ScreenHeader
+        v-if="artist"
+        :disabled="loading"
+        :layout="songs.length ? headerLayout : 'expanded'"
+        circular-thumbnail
+      >
         {{ artist.name }}
+
+        <template #eyebrow>
+          <Icon :icon="faMicrophone" class="text-k-highlight" />
+          Artist
+        </template>
 
         <template #thumbnail>
           <div class="relative group/thumb w-full aspect-square">
@@ -12,11 +22,12 @@
             <button
               v-if="allowEdit"
               type="button"
-              class="absolute bottom-2 right-2 z-20 w-8 h-8 rounded-full bg-black/75 hover:bg-k-highlight text-white flex items-center justify-center transition shadow-lg backdrop-blur-xs opacity-0 group-hover/thumb:opacity-100 cursor-pointer"
+              class="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 h-8 px-3 rounded-full bg-black/70 hover:bg-k-highlight text-white text-xs font-medium flex items-center gap-1.5 transition shadow-lg backdrop-blur-xs opacity-0 group-hover/thumb:opacity-100 no-hover:opacity-100 focus-visible:opacity-100 cursor-pointer"
               title="Change artist photo"
               @click.stop="requestEditForm"
             >
               <Icon :icon="faCamera" />
+              Edit
             </button>
           </div>
         </template>
@@ -28,54 +39,30 @@
         </template>
 
         <template #controls>
-          <div class="flex items-center gap-2">
-            <SongListControls
-              v-if="songs.length"
-              :config
-              @filter="applyFilter"
-              @play-all="playAll"
-              @play-selected="playSelected"
-            >
-              <FavoriteButton
-                v-if="artist.favorite"
-                :favorite="artist.favorite"
-                class="px-3.5 py-2"
-                @toggle="toggleFavorite"
-              />
-              <StarRating :rateable="artist" class="px-2" />
-              <Btn
-                v-if="allowEdit"
-                variant="ghost"
-                class="px-3.5 py-2 text-xs flex items-center gap-1.5"
-                title="Change artist photo & info"
-                @click="requestEditForm"
-              >
-                <Icon :icon="faCamera" />
-                <span class="hidden sm:inline">Change Photo</span>
-              </Btn>
-              <Btn variant="ghost" @click="requestContextMenu">
-                <Icon :icon="faEllipsis" fixed-width />
-                <span class="sr-only">More Actions</span>
-              </Btn>
-            </SongListControls>
+          <SongListControls
+            v-if="songs.length"
+            :config
+            @filter="applyFilter"
+            @play-all="playAll"
+            @play-selected="playSelected"
+          >
+            <ArtistHeaderActions
+              :artist
+              :allow-edit
+              @toggle-favorite="toggleFavorite"
+              @edit="requestEditForm"
+              @more="requestContextMenu"
+            />
+          </SongListControls>
 
-            <div v-else class="flex items-center gap-2">
-              <Btn
-                v-if="allowEdit"
-                variant="ghost"
-                class="px-3.5 py-2 text-xs flex items-center gap-1.5"
-                title="Change artist photo & info"
-                @click="requestEditForm"
-              >
-                <Icon :icon="faCamera" />
-                <span>Change Photo</span>
-              </Btn>
-              <Btn variant="ghost" @click="requestContextMenu">
-                <Icon :icon="faEllipsis" fixed-width />
-                <span class="sr-only">More Actions</span>
-              </Btn>
-            </div>
-          </div>
+          <ArtistHeaderActions
+            v-else
+            :artist
+            :allow-edit
+            @toggle-favorite="toggleFavorite"
+            @edit="requestEditForm"
+            @more="requestContextMenu"
+          />
         </template>
       </ScreenHeader>
     </template>
@@ -134,7 +121,7 @@
 </template>
 
 <script lang="ts" setup>
-import { faCamera, faEllipsis } from '@fortawesome/free-solid-svg-icons'
+import { faCamera, faMicrophone } from '@fortawesome/free-solid-svg-icons'
 import { computed, ref } from 'vue'
 import { defineAsyncComponent } from '@/utils/helpers'
 import { eventBus } from '@/utils/eventBus'
@@ -159,14 +146,12 @@ import SongListSkeleton from '@/components/playable/playable-list/PlayableListSk
 import ScreenTabs from '@/components/ui/ArtistAlbumScreenTabs.vue'
 import ScreenBase from '@/components/screens/ScreenBase.vue'
 import GridListView from '@/components/ui/GridListView.vue'
-import Btn from '@/components/ui/form/Btn.vue'
+import ArtistHeaderActions from '@/components/artist/ArtistHeaderActions.vue'
 
 const ArtistInfo = defineAsyncComponent(() => import('@/components/artist/ArtistInfo.vue'))
 const AlbumCard = defineAsyncComponent(() => import('@/components/album/AlbumCard.vue'))
 const ArtistEventList = defineAsyncComponent(() => import('@/components/artist/ArtistEventList.vue'))
 const AlbumCardSkeleton = defineAsyncComponent(() => import('@/components/ui/album-artist/ArtistAlbumCardSkeleton.vue'))
-const FavoriteButton = defineAsyncComponent(() => import('@/components/ui/FavoriteButton.vue'))
-const StarRating = defineAsyncComponent(() => import('@/components/ui/StarRating.vue'))
 const ArtistContextMenu = defineAsyncComponent(() => import('@/components/artist/ArtistContextMenu.vue'))
 const EditArtistForm = defineAsyncComponent(() => import('@/components/artist/EditArtistForm.vue'))
 
@@ -192,7 +177,11 @@ const allowEdit = computed(() => {
     return false
   }
 
-  return !artistStore.isUnknown(artist.value) && !artistStore.isVarious(artist.value) && currentUserCan.editArtist(artist.value)
+  return (
+    !artistStore.isUnknown(artist.value) &&
+    !artistStore.isVarious(artist.value) &&
+    currentUserCan.editArtist(artist.value)
+  )
 })
 
 const requestEditForm = () => {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SongPlayRequest;
 use App\Models\Song;
 use App\Models\User;
+use App\Services\Store\EntitlementService;
 use App\Services\Streamer\Streamer;
 use App\Values\RequestedStreamingConfig;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -15,8 +16,13 @@ class PlayController extends Controller
      * @param User $user
      * @param ?bool $transcode Whether to **force** transcoding (on mobile devices).
      */
-    public function __invoke(Authenticatable $user, SongPlayRequest $request, Song $song, ?bool $transcode = null)
-    {
+    public function __invoke(
+        Authenticatable $user,
+        SongPlayRequest $request,
+        EntitlementService $entitlementService,
+        Song $song,
+        ?bool $transcode = null,
+    ) {
         $this->authorize('access', $song);
 
         // If force transcoding is enabled, use the user's transcoding quality preference.
@@ -30,6 +36,7 @@ class PlayController extends Controller
             transcode: (bool) $transcode,
             bitRate: $transcodeBitRate,
             startTime: (float) $request->time,
+            previewSeconds: $entitlementService->previewSecondsFor($user, $song),
         )))->stream();
     }
 }

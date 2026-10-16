@@ -189,4 +189,20 @@ class TranscoderTest extends TestCase
             1,
         );
     }
+
+    #[Test]
+    public function transcodeOnlyTheStartWhenGivenAMaxDuration(): void
+    {
+        Process::fake();
+        File::expects('ensureDirectoryExists')->with('/path/to');
+
+        $transcoder = new Transcoder(transcodeTimeout: 300, ffmpegPath: '/usr/bin/ffmpeg');
+        $transcoder->transcode('/path/to/song.flac', '/path/to/preview.m4a', 128, 30.0);
+
+        Process::assertRan(static function (PendingProcess $process): bool {
+            $inputIndex = array_search('-i', $process->command, true);
+
+            return array_slice($process->command, $inputIndex + 2, 2) === ['-t', '30'];
+        });
+    }
 }

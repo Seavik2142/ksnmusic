@@ -112,9 +112,20 @@ describe('artistScreen.vue', () => {
     })
   })
 
-  it('does not have a Favorite button if artist is not favorite', async () => {
-    await renderComponent('songs', h.factory('artist').make({ favorite: false }))
-    expect(screen.queryByRole('button', { name: 'Favorite' })).toBeNull()
+  it('lets the user favorite an artist that is not a favorite yet', async () => {
+    const { artist } = await renderComponent('songs', h.factory('artist').make({ favorite: false }))
+    const favoriteMock = h.mock(artistStore, 'toggleFavorite')
+
+    await waitFor(async () => {
+      await h.user.click(screen.getByRole('button', { name: 'Favorite' }))
+      expect(favoriteMock).toHaveBeenCalledWith(artist)
+    })
+  })
+
+  it('labels the page as an artist page', async () => {
+    await renderComponent()
+
+    await waitFor(() => screen.getByText('Artist'))
   })
 
   it('requests Actions menu', async () => {

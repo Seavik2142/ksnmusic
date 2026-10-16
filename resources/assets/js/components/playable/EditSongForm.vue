@@ -181,7 +181,8 @@
           class="space-y-4"
         >
           <div class="text-xs text-k-fg-60">
-            Pick or paste new cover art for this song and its album (<strong>{{ displayedAlbumName }}</strong>).
+            Pick or paste new cover art for this song and its album (<strong>{{ displayedAlbumName }}</strong
+            >).
           </div>
           <ArtworkField v-model="data.cover">Pick or paste a cover (optional)</ArtworkField>
         </TabPanel>

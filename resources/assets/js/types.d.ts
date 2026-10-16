@@ -174,8 +174,11 @@ interface Album {
   is_external: boolean
   favorite: boolean
   rating: number
+  price_cents?: number | null // null when the album isn't sold as a bundle
+  is_purchased?: boolean
   permissions: {
     edit: boolean
+    set_price?: boolean
   }
 }
 
@@ -223,6 +226,9 @@ interface Song extends BasePlayable {
   file_size?: number | null
   basename?: string
   deleted?: boolean
+  price_cents?: number | null // null when the song is free
+  is_purchased?: boolean
+  preview_only?: boolean // the current user can only hear a preview until they buy it
   collaboration?: {
     user: PlaylistCollaborator
     added_at: string | null
@@ -579,12 +585,14 @@ interface ScreenNames {
   'Invitation.Accept': true
   MediaBrowser: true
   OfflineSongs: true
+  Order: true
   'Password.Reset': true
   Playlist: true
   'Playlist.Collaborate': true
   Podcast: true
   Podcasts: true
   Profile: true
+  Purchases: true
   Queue: true
   'Radio.Stations': true
   RecentlyPlayed: true
@@ -599,6 +607,37 @@ interface ScreenNames {
 }
 
 declare type ScreenName = keyof ScreenNames
+
+type PaymentProvider = 'paypal' | 'payway'
+
+type PaymentMethod = 'paypal' | 'khqr' | 'card'
+
+type StoreOrderStatus = 'pending' | 'paid' | 'failed' | 'cancelled'
+
+interface StoreOrderItem {
+  type: 'songs' | 'albums'
+  id: string
+  name: string | null
+  amount_cents: number
+}
+
+interface StoreOrder {
+  type: 'orders'
+  id: string
+  status: StoreOrderStatus
+  provider: PaymentProvider
+  amount_cents: number
+  currency: string
+  paid_at: string | null
+  created_at: string
+  items: StoreOrderItem[]
+}
+
+interface PaymentInitiation {
+  url: string
+  method: 'GET' | 'POST'
+  fields: Record<string, string>
+}
 
 interface HookSlotNames {
   'sidebar.footer': true
@@ -674,6 +713,7 @@ interface PlayableListContext {
     | 'Genre'
     | 'Search.Playables'
     | 'OfflineSongs'
+    | 'Purchases'
   >
 }
 

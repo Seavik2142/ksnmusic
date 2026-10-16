@@ -36,20 +36,11 @@
         <div class="grid grid-cols-2 gap-3">
           <FormRow>
             <template #label>Artist Name</template>
-            <TextInput
-              v-model="newAlbumData.artist_name"
-              name="new_album_artist"
-              placeholder="Artist name"
-            />
+            <TextInput v-model="newAlbumData.artist_name" name="new_album_artist" placeholder="Artist name" />
           </FormRow>
           <FormRow>
             <template #label>Release Year</template>
-            <TextInput
-              v-model="newAlbumData.year"
-              type="number"
-              name="new_album_year"
-              placeholder="e.g. 2026"
-            />
+            <TextInput v-model="newAlbumData.year" type="number" name="new_album_year" placeholder="e.g. 2026" />
           </FormRow>
         </div>
       </div>
@@ -63,12 +54,13 @@
             placeholder="Search albums by name or artist..."
             class="pl-9! w-full"
           />
-          <Icon :icon="faSearch" class="absolute left-3 top-1/2 -translate-y-1/2 text-k-fg-40 pointer-events-none text-xs" />
+          <Icon
+            :icon="faSearch"
+            class="absolute left-3 top-1/2 -translate-y-1/2 text-k-fg-40 pointer-events-none text-xs"
+          />
         </div>
 
-        <div v-if="loading" class="py-8 text-center text-k-fg-50 text-sm">
-          Loading albums…
-        </div>
+        <div v-if="loading" class="py-8 text-center text-k-fg-50 text-sm">Loading albums…</div>
 
         <div
           v-else-if="filteredAlbums.length"
@@ -78,7 +70,11 @@
             v-for="album in filteredAlbums"
             :key="album.id"
             class="flex items-center gap-3 p-2.5 rounded-lg cursor-pointer transition-colors border"
-            :class="selectedAlbumId === album.id ? 'bg-k-highlight/15 border-k-highlight text-k-fg' : 'border-transparent hover:bg-k-fg-10 text-k-fg-80'"
+            :class="
+              selectedAlbumId === album.id
+                ? 'bg-k-highlight/15 border-k-highlight text-k-fg'
+                : 'border-transparent hover:bg-k-fg-10 text-k-fg-80'
+            "
             @click="selectedAlbumId = album.id"
           >
             <div class="w-10 h-10 rounded-md overflow-hidden shrink-0 bg-k-fg-10 relative">

@@ -49,6 +49,7 @@ use PhanAn\Poddle\Values\EpisodeMetadata;
  * @property ?string $basename
  * @property ?string $folder_id
  * @property ?string $mime_type The MIME type of the song file, if available
+ * @property ?int $price_cents The song's price in cents, or null if it's free
  * @property Carbon $created_at
  * @property Collection<Genre>|array<array-key, Genre> $genres
  * @property SongStorageType $storage
@@ -121,6 +122,7 @@ class Song extends Model implements AuditableContract, Favoriteable, Embeddable,
             'episode_metadata' => EpisodeMetadataCast::class,
             'favorite' => 'boolean',
             'favorited_at' => 'datetime',
+            'price_cents' => 'int',
         ];
     }
 
@@ -193,6 +195,11 @@ class Song extends Model implements AuditableContract, Favoriteable, Embeddable,
             ->map(static fn (string $name) => Genre::get($name)->id);
 
         $this->genres()->sync($genreIds);
+    }
+
+    public function isForSale(): bool
+    {
+        return !$this->isEpisode() && $this->price_cents > 0;
     }
 
     public function isEpisode(): bool

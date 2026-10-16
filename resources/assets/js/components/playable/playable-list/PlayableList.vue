@@ -408,8 +408,12 @@ onMounted(() => render())
     }
   }
 
+  .song-item > span:is(.album, .genre, .year, .added-at, .track-number) {
+    @apply text-k-fg-60;
+  }
+
   .song-list-header {
-    @apply tracking-widest uppercase cursor-pointer text-k-fg-70;
+    @apply tracking-[0.08em] uppercase text-[0.75rem] font-medium cursor-pointer text-k-fg-50 border-b border-k-fg-10 mb-2;
 
     .extra {
       @apply px-0;

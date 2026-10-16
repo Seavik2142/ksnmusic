@@ -7,15 +7,19 @@ use App\Enums\Acl\Role;
 use App\Facades\License;
 use App\Models\Album;
 use App\Models\User;
+use App\Services\Store\EntitlementService;
 
 class AlbumPolicy
 {
+    public function __construct(
+        private readonly EntitlementService $entitlementService,
+    ) {}
+
     public function create(User $user): bool
     {
-        return License::isCommunity()
-            ? $user->hasPermissionTo(Permission::MANAGE_SONGS)
-            : $user->role !== Role::GUEST;
+        return License::isCommunity() ? $user->hasPermissionTo(Permission::MANAGE_SONGS) : $user->role !== Role::GUEST;
     }
+
     public function access(User $user, Album $album): bool
     {
         return License::isCommunity() || $album->belongsToUser($user);
@@ -31,33 +35,37 @@ class AlbumPolicy
             return false;
         }
 
-        if ($user->hasRole(Role::ADMIN) || $user->hasRole(Role::MANAGER)) {
-            return true;
-        }
-
         if ($album->belongsToUser($user)) {
             return true;
         }
 
-        if ($user->hasRole(Role::ARTIST) && (
-            $album->artist_name === $user->name
-            || $album->artist?->name === $user->name
-            || $album->songs()->where('owner_id', $user->id)->exists()
-        )) {
+        if (License::isCommunity()) {
+            return $user->hasRole(Role::ADMIN)
+                || $user->hasRole(Role::MANAGER)
+                || $user->hasPermissionTo(Permission::MANAGE_SONGS);
+        }
+
+        if (
+            $user->hasRole(Role::ARTIST)
+            && (
+                $album->artist_name === $user->name
+                || $album->artist->name === $user->name
+                || $album->songs()->where('owner_id', $user->id)->exists()
+            )
+        ) {
             return true;
         }
 
-        // For CE, if the user can manage songs, they can update any album.
-        if ($user->hasPermissionTo(Permission::MANAGE_SONGS) && License::isCommunity()) {
-            return true;
-        }
-
-        // For Plus, only the owner of the album can update it.
-        return $album->belongsToUser($user) && License::isPlus();
+        return false;
     }
 
     public function edit(User $user, Album $album): bool
     {
         return $this->update($user, $album);
+    }
+
+    public function setPrice(User $user, Album $album): bool
+    {
+        return !$album->is_unknown && $this->entitlementService->canSetPrice($user, $album);
     }
 }

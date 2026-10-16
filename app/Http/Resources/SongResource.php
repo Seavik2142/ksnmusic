@@ -6,6 +6,7 @@ use App\Facades\License;
 use App\Models\Song;
 use App\Models\User;
 use App\Services\Integrations\MusicBrainzService;
+use App\Services\Store\EntitlementService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\URL;
@@ -149,13 +150,26 @@ class SongResource extends JsonResource
                 'podcast_author' => $this->song->podcast->metadata->author,
             ];
         } else {
-            $data += [
-                'owner_id' => $this->unless($embedding, $this->song->owner->public_id),
-                'file_size' => $this->unless($embedding, $this->song->file_size),
-                'is_external' => $this->unless($embedding, fn () => $isPlus && !$this->song->ownedBy($user)),
-            ];
+            $data +=
+                [
+                    'owner_id' => $this->unless($embedding, $this->song->owner->public_id),
+                    'file_size' => $this->unless($embedding, $this->song->file_size),
+                    'is_external' => $this->unless($embedding, fn () => $isPlus && !$this->song->ownedBy($user)),
+                ] + $this->storeAttributes($embedding ? null : $user);
         }
 
         return $data;
+    }
+
+    /** @return array{price_cents: ?int, is_purchased: bool, preview_only: bool} */
+    private function storeAttributes(?User $user): array
+    {
+        $entitlements = app(EntitlementService::class);
+
+        return [
+            'price_cents' => $this->song->isForSale() ? $this->song->price_cents : null,
+            'is_purchased' => $user && $entitlements->hasPurchasedSong($user, $this->song),
+            'preview_only' => $entitlements->isPreviewOnly($user, $this->song),
+        ];
     }
 }

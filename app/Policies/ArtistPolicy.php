@@ -21,25 +21,21 @@ class ArtistPolicy
             return false;
         }
 
-        if ($user->hasRole(Role::ADMIN) || $user->hasRole(Role::MANAGER)) {
+        if ($artist->belongsToUser($user)) {
             return true;
         }
 
-        if ($artist->belongsToUser($user)) {
-            return true;
+        if (License::isCommunity()) {
+            return $user->hasRole(Role::ADMIN)
+                || $user->hasRole(Role::MANAGER)
+                || $user->hasPermissionTo(Permission::MANAGE_SONGS);
         }
 
         if ($user->hasRole(Role::ARTIST) && ($artist->name === $user->name || $artist->songs()->where('owner_id', $user->id)->exists())) {
             return true;
         }
 
-        // For CE, if the user can manage songs, they can update any artist.
-        if ($user->hasPermissionTo(Permission::MANAGE_SONGS) && License::isCommunity()) {
-            return true;
-        }
-
-        // For Plus, only the owner of the artist can update it.
-        return $artist->belongsToUser($user) && License::isPlus();
+        return false;
     }
 
     public function edit(User $user, Artist $artist): bool

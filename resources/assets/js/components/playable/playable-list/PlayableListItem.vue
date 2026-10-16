@@ -40,6 +40,7 @@
           />
           <OfflineMark v-else-if="cachedOffline" />
           <span class="flex-1">{{ playable.title }}</span>
+          <BuyButton v-if="isSong(playable) && playable.preview_only" :item="playable" class="shrink-0" />
         </span>
         <span class="artist text-[0.9rem] text-k-fg-50">{{ artist }}</span>
       </span>
@@ -101,6 +102,7 @@ import ExternalMark from '@/components/ui/ExternalMark.vue'
 import OfflineMark from '@/components/ui/OfflineMark.vue'
 import FavoriteButton from '@/components/ui/FavoriteButton.vue'
 import StarRating from '@/components/ui/StarRating.vue'
+import BuyButton from '@/components/store/BuyButton.vue'
 
 const props = withDefaults(defineProps<{ item: PlayableRow; showDisc?: boolean }>(), {
   showDisc: false,
@@ -150,10 +152,13 @@ article {
 
   &.playing {
     .title,
-    .track-number,
-    .favorite {
+    .track-number {
       @apply text-k-highlight;
     }
+  }
+
+  .extra {
+    @apply opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 no-hover:opacity-100 transition-opacity;
   }
 
   .title-artist {

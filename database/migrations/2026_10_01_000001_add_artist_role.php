@@ -16,6 +16,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        RoleModel::findByName(Role::ARTIST->value)?->delete();
+        RoleModel::findByName(Role::ARTIST->value)->delete();
     }
 };

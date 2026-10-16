@@ -27,13 +27,15 @@
       <EmptyLibraryHint />
     </ScreenEmptyState>
 
-    <div v-else class="home-sections space-y-12 w-full">
+    <div v-else class="home-sections space-y-10 w-full">
       <component
-        v-for="block in orderedBlocks"
+        v-for="(block, index) in orderedBlocks"
         :key="block.id"
         :is="block.component"
         :loading
         :data-testid="block.id"
+        :style="{ '--stagger': index + 1 }"
+        class="animate-rise"
       />
       <BtnScrollToTop />
     </div>
@@ -43,7 +45,6 @@
 <script lang="ts" setup>
 import { faVolumeOff } from '@fortawesome/free-solid-svg-icons'
 import { ListChevronsUpDownIcon } from 'lucide-vue-next'
-import { sample } from 'lodash-es'
 import type { Component } from 'vue'
 import { computed, defineAsyncComponent, ref } from 'vue'
 import { eventBus } from '@/utils/eventBus'
@@ -98,19 +99,25 @@ const blocks: Block[] = [
 
 const { openModal } = useModal()
 
-const greetings = [
-  'Oh hai!',
-  'Hey, %s!',
-  'Howdy, %s!',
-  'Yo!',
-  'How’s it going, %s?',
-  'Sup, %s?',
-  'How’s life, %s?',
-  'How’s your day, %s?',
-  'How have you been, %s?',
-]
+const timeOfDayGreeting = () => {
+  const hour = new Date().getHours()
 
-const greeting = computed(() => (userStore.current ? sample(greetings)!.replace('%s', userStore.current.name) : ''))
+  if (hour < 5) {
+    return 'Good evening'
+  }
+
+  if (hour < 12) {
+    return 'Good morning'
+  }
+
+  if (hour < 18) {
+    return 'Good afternoon'
+  }
+
+  return 'Good evening'
+}
+
+const greeting = computed(() => (userStore.current ? `${timeOfDayGreeting()}, ${userStore.current.name}` : ''))
 const libraryEmpty = computed(() => commonStore.state.song_length === 0)
 
 const loading = ref(false)
@@ -161,15 +168,6 @@ useRouter().onScreenActivated('Home', async () => {
 
   > * {
     @apply min-w-0;
-  }
-
-  > *:not(:first-child) {
-    @apply relative;
-
-    /* Divider sits in the gap between blocks. */
-    &::before {
-      @apply content-[''] absolute -top-6 left-0 right-0 -mx-6 h-px bg-k-fg-5;
-    }
   }
 }
 </style>

@@ -23,6 +23,7 @@ export const usePlayableListControls = (
       'Playlist',
       'Search.Playables',
       'OfflineSongs',
+      'Purchases',
     ].includes(screen),
   }
 

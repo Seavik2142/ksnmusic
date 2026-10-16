@@ -1,150 +1,202 @@
+"""Generate every KSN brand image from the single source logo, resources/assets/img/ksnlogo.svg.
+
+Usage: python3 scripts/generate_branding.py
+
+Requires only the Python standard library and Google Chrome (override its location with CHROME_PATH).
+The source logo is never modified; edit it, then rerun this script to refresh everything derived from it.
+"""
+
 import os
+import re
+import shutil
+import struct
 import subprocess
-from PIL import Image
+import sys
+import tempfile
+from pathlib import Path
 
-WORKSPACE = '/Users/ahzarjy/Documents/KSN_song'
+REPO_ROOT = Path(__file__).resolve().parent.parent
+ASSETS_DIR = REPO_ROOT / 'resources/assets/img'
+PUBLIC_DIR = REPO_ROOT / 'public/img'
+SOURCE_LOGO = ASSETS_DIR / 'ksnlogo.svg'
+CHROME_PATH = os.environ.get('CHROME_PATH', '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
 
-# 1. Main Vector Logo (Aspect ratio ~3.25:1, 260x80)
-vector_logo_svg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 80" width="100%" height="100%">
+MARK_COLOR = '#ffffff'
+ICON_BACKGROUND = 'radial-gradient(circle at 50% 30%, #2a2a2f 0%, #121214 62%, #0b0b0c 100%)'
+FAVICON_SIZES = (16, 32, 48, 256)
+
+
+def read_source_logo():
+    markup = SOURCE_LOGO.read_text()
+
+    def find(pattern, label):
+        match = re.search(pattern, markup)
+        if not match:
+            sys.exit(f'Could not find the {label} in {SOURCE_LOGO}')
+        return match.group(1)
+
+    return {
+        'markup': markup,
+        'view_box': [float(value) for value in find(r'viewBox="([^"]+)"', 'viewBox').split()],
+        'mark_path': find(r'class="ksn-logo-mark"[^>]*\sd="([^"]+)"', 'letter path'),
+        'accent_path': find(r'class="ksn-logo-accent"[^>]*\sd="([^"]+)"', 'accent path'),
+        'accent_color': find(r'--ksn-logo-accent:\s*(#[0-9a-fA-F]{3,8})', 'accent color'),
+    }
+
+
+def solid_logo_svg(logo, x, y, width):
+    """The logo as nested SVG with fixed colors, for surfaces whose background never changes."""
+    _, _, view_width, view_height = logo['view_box']
+    height = width * view_height / view_width
+    return (
+        f'<svg x="{x:.1f}" y="{y:.1f}" width="{width:.1f}" height="{height:.1f}" '
+        f'viewBox="{" ".join(f"{value:g}" for value in logo["view_box"])}">'
+        f'<path fill="{MARK_COLOR}" d="{logo["mark_path"]}"/>'
+        f'<path fill="{logo["accent_color"]}" d="{logo["accent_path"]}"/>'
+        '</svg>'
+    )
+
+
+def square_favicon_svg(logo):
+    """The source logo in a square frame; keeps its own light/dark color switching."""
+    min_x, min_y, width, height = logo['view_box']
+    side = max(width, height)
+    square_view_box = f'{min_x - (side - width) / 2:g} {min_y - (side - height) / 2:g} {side:g} {side:g}'
+    return re.sub(r'viewBox="[^"]+"', f'viewBox="{square_view_box}"', logo['markup'], count=1)
+
+
+def default_cover_svg(logo):
+    logo_width = 512 * 0.5
+    _, _, view_width, view_height = logo['view_box']
+    logo_height = logo_width * view_height / view_width
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="KSN Music">
   <defs>
-    <linearGradient id="ksn-audio-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#38bdf8" />
-      <stop offset="50%" stop-color="#818cf8" />
-      <stop offset="100%" stop-color="#f43f5e" />
+    <linearGradient id="ksn-cover-background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2a2a2f"/>
+      <stop offset="1" stop-color="#0e0e10"/>
     </linearGradient>
-    <linearGradient id="ksn-bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#181a24" />
-      <stop offset="100%" stop-color="#0a0b10" />
-    </linearGradient>
-    <filter id="subtle-glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#818cf8" flood-opacity="0.4" />
-    </filter>
   </defs>
-
-  <!-- App Icon Mark -->
-  <g filter="url(#subtle-glow)">
-    <rect x="6" y="6" width="68" height="68" rx="19" 
-          fill="url(#ksn-bg-grad)" 
-          stroke="url(#ksn-audio-grad)" 
-          stroke-width="2" />
-    
-    <!-- Equalizer Waves -->
-    <g transform="translate(19, 20)">
-      <rect x="0" y="12" width="5.5" height="16" rx="2.75" fill="#38bdf8" />
-      <rect x="9" y="4" width="5.5" height="32" rx="2.75" fill="url(#ksn-audio-grad)" />
-      <rect x="18" y="0" width="5.5" height="40" rx="2.75" fill="url(#ksn-audio-grad)" />
-      <rect x="27" y="8" width="5.5" height="24" rx="2.75" fill="#818cf8" />
-      <rect x="36" y="15" width="5.5" height="10" rx="2.75" fill="#f43f5e" />
-    </g>
+  <rect width="512" height="512" fill="url(#ksn-cover-background)"/>
+  <g opacity="0.9">
+    {solid_logo_svg(logo, (512 - logo_width) / 2, (512 - logo_height) / 2, logo_width)}
   </g>
+</svg>
+'''
 
-  <!-- Wordmark -->
-  <g transform="translate(88, 0)">
-    <text x="0" y="48" 
-          font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif" 
-          font-size="42" 
-          font-weight="900" 
-          letter-spacing="2" 
-          fill="url(#ksn-audio-grad)">KSN</text>
 
-    <text x="2" y="68" 
-          font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif" 
-          font-size="12" 
-          font-weight="700" 
-          letter-spacing="5" 
-          fill="#94a3b8">MUSIC</text>
-  </g>
-</svg>'''
+def html_page(width, height, canvas_style, logo_svg):
+    return f'''<!doctype html>
+<html><head><meta charset="utf-8"><style>
+  html, body {{ margin: 0; width: {width}px; height: {height}px; overflow: hidden; background: transparent; }}
+  .canvas {{ width: {width}px; height: {height}px; overflow: hidden; {canvas_style} }}
+  svg {{ display: block; }}
+</style></head><body><div class="canvas">{logo_svg}</div></body></html>'''
 
-# 2. Square App Icon SVG (512x512)
-app_icon_svg = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
-  <defs>
-    <linearGradient id="ksn-audio-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#38bdf8" />
-      <stop offset="50%" stop-color="#818cf8" />
-      <stop offset="100%" stop-color="#f43f5e" />
-    </linearGradient>
-    <linearGradient id="ksn-bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#181a24" />
-      <stop offset="100%" stop-color="#0a0b10" />
-    </linearGradient>
-    <filter id="subtle-glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="12" stdDeviation="20" flood-color="#818cf8" flood-opacity="0.45" />
-    </filter>
-  </defs>
 
-  <!-- Background container / squircle -->
-  <g filter="url(#subtle-glow)">
-    <rect x="36" y="36" width="440" height="440" rx="110" 
-          fill="url(#ksn-bg-grad)" 
-          stroke="url(#ksn-audio-grad)" 
-          stroke-width="10" />
-  </g>
+def centered_logo_canvas(logo, width, height, logo_width_ratio):
+    _, _, view_width, view_height = logo['view_box']
+    logo_width = width * logo_width_ratio
+    logo_height = logo_width * view_height / view_width
+    inner = solid_logo_svg(logo, (width - logo_width) / 2, (height - logo_height) / 2, logo_width)
+    return f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}">{inner}</svg>'
 
-  <!-- Equalizer Waves -->
-  <g transform="translate(136, 126)">
-    <rect x="0" y="80" width="36" height="100" rx="18" fill="#38bdf8" />
-    <rect x="58" y="26" width="36" height="208" rx="18" fill="url(#ksn-audio-grad)" />
-    <rect x="116" y="0" width="36" height="260" rx="18" fill="url(#ksn-audio-grad)" />
-    <rect x="174" y="50" width="36" height="160" rx="18" fill="#818cf8" />
-    <rect x="232" y="95" width="36" height="70" rx="18" fill="#f43f5e" />
-  </g>
-</svg>'''
 
-# Write vector logo SVGs
-svg_targets = [
-    f'{WORKSPACE}/resources/assets/img/ksnlogo.svg',
-    f'{WORKSPACE}/resources/assets/img/logo.svg',
-    f'{WORKSPACE}/public/img/ksnlogo.svg',
-    f'{WORKSPACE}/public/img/logo.svg',
-]
+def render_png(page_html, width, height, workdir, name):
+    html_path = workdir / f'{name}.html'
+    png_path = workdir / f'{name}.png'
+    html_path.write_text(page_html)
+    subprocess.run(
+        [
+            CHROME_PATH,
+            '--headless',
+            '--disable-gpu',
+            '--hide-scrollbars',
+            '--default-background-color=00000000',
+            f'--window-size={width},{height}',
+            f'--screenshot={png_path}',
+            html_path.as_uri(),
+        ],
+        check=True,
+        capture_output=True,
+    )
+    return png_path.read_bytes()
 
-for target in svg_targets:
-    with open(target, 'w') as f:
-        f.write(vector_logo_svg)
-    print(f'Wrote {target}')
 
-# Generate 512x512 icon PNG via qlmanage
-tmp_icon_svg = '/tmp/ksn_icon_src.svg'
-with open(tmp_icon_svg, 'w') as f:
-    f.write(app_icon_svg)
+def build_ico(png_images_by_size):
+    header = struct.pack('<HHH', 0, 1, len(png_images_by_size))
+    offset = len(header) + 16 * len(png_images_by_size)
+    entries = b''
+    payload = b''
+    for size, png in png_images_by_size:
+        entries += struct.pack('<BBBBHHII', size % 256, size % 256, 0, 0, 1, 32, len(png), offset)
+        payload += png
+        offset += len(png)
+    return header + entries + payload
 
-subprocess.run(['qlmanage', '-t', '-s', '512', '-o', '/tmp', tmp_icon_svg], check=True)
-icon_512_png = '/tmp/ksn_icon_src.svg.png'
 
-# Load generated PNG with PIL
-img_512 = Image.open(icon_512_png).convert('RGBA')
+def write(path, content):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if isinstance(content, bytes):
+        path.write_bytes(content)
+    else:
+        path.write_text(content)
+    print(f'Wrote {path.relative_to(REPO_ROOT)}')
 
-# Target PNG icon paths
-png_targets = [
-    f'{WORKSPACE}/resources/assets/img/icon.png',
-    f'{WORKSPACE}/public/img/icon.png',
-    f'{WORKSPACE}/resources/assets/img/logo.png',
-]
 
-for target in png_targets:
-    img_512.save(target, format='PNG')
-    print(f'Wrote {target}')
+def main():
+    if not Path(CHROME_PATH).exists():
+        sys.exit(f'Google Chrome not found at {CHROME_PATH}; set CHROME_PATH to its executable.')
 
-# Target ICO favicons
-ico_targets = [
-    f'{WORKSPACE}/resources/assets/img/favicon.ico',
-    f'{WORKSPACE}/public/img/favicon.ico',
-]
+    logo = read_source_logo()
 
-for target in ico_targets:
-    img_512.save(target, format='ICO', sizes=[(16, 16), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)])
-    print(f'Wrote {target}')
+    with tempfile.TemporaryDirectory() as temp:
+        workdir = Path(temp)
 
-# Tiles
-tile_558 = img_512.resize((558, 558), Image.Resampling.LANCZOS)
-tile_558.save(f'{WORKSPACE}/resources/assets/img/tile.png', format='PNG')
-print(f'Wrote {WORKSPACE}/resources/assets/img/tile.png')
+        app_icon = render_png(
+            html_page(512, 512, f'background: {ICON_BACKGROUND};', centered_logo_canvas(logo, 512, 512, 0.66)),
+            512, 512, workdir, 'icon',
+        )
 
-tile_wide = Image.new('RGBA', (558, 270), (10, 11, 16, 255))
-scaled_icon = img_512.resize((230, 230), Image.Resampling.LANCZOS)
-tile_wide.paste(scaled_icon, (164, 20), scaled_icon)
-tile_wide.save(f'{WORKSPACE}/resources/assets/img/tile-wide.png', format='PNG')
-print(f'Wrote {WORKSPACE}/resources/assets/img/tile-wide.png')
+        favicon_images = []
+        for size in FAVICON_SIZES:
+            logo_ratio = 0.96 if size <= 16 else 0.9 if size <= 32 else 0.8
+            rounded_square = f'background: {ICON_BACKGROUND}; border-radius: {size * 0.22:.1f}px;'
+            favicon_images.append(
+                (size, render_png(html_page(size, size, rounded_square, centered_logo_canvas(logo, size, size, logo_ratio)), size, size, workdir, f'favicon-{size}'))
+            )
 
-print('All branding assets generated successfully!')
+        tile = render_png(
+            html_page(558, 558, f'background: {ICON_BACKGROUND};', centered_logo_canvas(logo, 558, 558, 0.6)),
+            558, 558, workdir, 'tile',
+        )
+        tile_wide = render_png(
+            html_page(558, 270, f'background: {ICON_BACKGROUND};', centered_logo_canvas(logo, 558, 270, 0.5)),
+            558, 270, workdir, 'tile-wide',
+        )
+
+        cover_svg = default_cover_svg(logo)
+        cover_png = render_png(html_page(678, 678, '', cover_svg.replace('<svg ', '<svg width="678" height="678" ', 1)), 678, 678, workdir, 'cover')
+
+    favicon_ico = build_ico(favicon_images)
+    favicon_svg = square_favicon_svg(logo)
+
+    write(ASSETS_DIR / 'logo.svg', logo['markup'])
+    write(ASSETS_DIR / 'favicon.svg', favicon_svg)
+    write(ASSETS_DIR / 'icon.png', app_icon)
+    write(ASSETS_DIR / 'logo.png', app_icon)
+    write(ASSETS_DIR / 'favicon.ico', favicon_ico)
+    write(ASSETS_DIR / 'tile.png', tile)
+    write(ASSETS_DIR / 'tile-wide.png', tile_wide)
+    write(ASSETS_DIR / 'covers/default.svg', cover_svg)
+    write(ASSETS_DIR / 'covers/default.png', cover_png)
+
+    for name in ('ksnlogo.svg', 'logo.svg', 'favicon.svg', 'icon.png', 'favicon.ico', 'tile.png', 'tile-wide.png'):
+        PUBLIC_DIR.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ASSETS_DIR / name, PUBLIC_DIR / name)
+        print(f'Wrote {(PUBLIC_DIR / name).relative_to(REPO_ROOT)}')
+
+    print('All branding assets generated from ksnlogo.svg.')
+
+
+if __name__ == '__main__':
+    main()

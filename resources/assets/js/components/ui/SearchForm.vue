@@ -1,7 +1,7 @@
 <template>
   <form
     id="searchForm"
-    class="relative text-k-fg-70 flex items-stretch border border-k-fg-10 overflow-hidden py-0 rounded-md bg-k-bg-50 focus-within:border-k-highlight transition-[border,background-color] duration-200 ease-in-out"
+    class="relative h-10 text-k-fg-70 flex items-stretch border border-transparent overflow-hidden py-0 rounded-full bg-k-fg-5 hover:bg-k-fg-10 focus-within:bg-k-fg-10 focus-within:border-k-fg-30 transition-[border,background-color] duration-150 ease-in-out"
     role="search"
     @submit.prevent="onSubmit"
   >
@@ -25,7 +25,7 @@
       <Icon :icon="faSearch" />
     </button>
 
-    <span class="hidden md:flex items-center px-3 text-k-fg-30 pointer-events-none">
+    <span class="hidden md:flex items-center pr-4 pl-2 text-k-fg-40 pointer-events-none">
       <Icon :icon="faSearch" />
     </span>
   </form>

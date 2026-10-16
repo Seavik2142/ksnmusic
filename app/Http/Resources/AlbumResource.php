@@ -6,6 +6,7 @@ use App\Facades\License;
 use App\Models\Album;
 use App\Models\User;
 use App\Services\Integrations\MusicBrainzService;
+use App\Services\Store\EntitlementService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -103,8 +104,14 @@ class AlbumResource extends JsonResource
             'favorite' => $this->unless($embedding, $this->album->favorite),
             'length' => $this->unless($embedding, fn () => (float) ($this->album->length ?? 0)),
             'rating' => $this->unless($embedding, fn () => (int) ($this->album->rating ?? 0)),
+            'price_cents' => $this->album->isForSale() ? $this->album->price_cents : null,
+            'is_purchased' => $this->unless(
+                $embedding,
+                fn () => $user && app(EntitlementService::class)->hasPurchasedAlbum($user, $this->album),
+            ),
             'permissions' => $this->unless($embedding, fn () => [
                 'edit' => $user->can('edit', $this->album),
+                'set_price' => $user->can('setPrice', $this->album),
             ]),
         ];
     }

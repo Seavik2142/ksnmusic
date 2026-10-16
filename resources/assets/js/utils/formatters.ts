@@ -136,3 +136,6 @@ export const textToHsl = (text: string, l = 55) => {
   const s = 50 + ((hash >>> 8) % 30)
   return `hsl(${h} ${s}% ${l}%)`
 }
+
+export const formatPrice = (cents: number, currency = 'USD') =>
+  new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(cents / 100)

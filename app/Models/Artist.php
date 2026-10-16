@@ -37,6 +37,8 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
  * @property Collection<array-key, Album> $albums
  * @property Collection<array-key, Song> $songs
  * @property User $user
+ * @property ?User $seller The account that receives this artist's sales earnings
+ * @property ?int $seller_id
  * @property bool $is_unknown If the artist is Unknown Artist
  * @property bool $is_various If the artist is Various Artists
  * @property int $user_id The ID of the user that owns this artist
@@ -96,6 +98,16 @@ class Artist extends Model implements AuditableContract, Embeddable, Favoriteabl
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function seller(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'seller_id');
+    }
+
+    public function isSoldBy(User $user): bool
+    {
+        return $this->seller_id !== null && $this->seller_id === $user->id;
     }
 
     public function belongsToUser(User $user): bool

@@ -90,12 +90,10 @@
       <div class="flex flex-col items-center gap-3 max-w-md mx-auto text-center">
         <span class="text-lg font-semibold text-k-fg">No media path set</span>
         <p class="secondary text-sm leading-relaxed">
-          Koel requires a server directory to store and scan uploaded audio files.
-          Please configure the media path in Settings before uploading songs.
+          Koel requires a server directory to store and scan uploaded audio files. Please configure the media path in
+          Settings before uploading songs.
         </p>
-        <Btn v-if="canManageSettings" class="mt-1" @click="goToSettings">
-          Configure Media Path
-        </Btn>
+        <Btn v-if="canManageSettings" class="mt-1" @click="goToSettings"> Configure Media Path </Btn>
       </div>
     </ScreenEmptyState>
   </ScreenBase>

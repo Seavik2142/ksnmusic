@@ -33,13 +33,45 @@
 }
 
 @utility playable-list-item {
-  @apply border-b border-k-fg-10 max-w-full! h-[64px] flex
-    items-center transition-[background-color] ease-in-out duration-200
-    focus:ring-inset focus:ring-1 focus:ring-k-highlight!
-    focus-within:ring-inset focus-within:ring-1 focus-within:ring-k-highlight!
+  @apply rounded-md max-w-full! h-[64px] flex
+    items-center transition-[background-color] ease-in-out duration-150
+    focus-visible:outline-none focus-visible:ring-inset focus-visible:ring-1 focus-visible:ring-k-fg-30!
     hover:bg-k-fg-5;
 
   &.selected {
     @apply bg-k-fg-10;
+  }
+}
+
+@utility animate-rise {
+  animation: rise 0.5s var(--ease-out) backwards;
+  animation-delay: calc(min(var(--stagger, 0), 10) * 55ms);
+}
+
+@utility animate-pop-in {
+  animation: pop-in 0.4s var(--ease-out) backwards;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

@@ -8,6 +8,7 @@ use App\Models\Song;
 use App\Services\Streamer\Adapters\DropboxStreamerAdapter;
 use App\Services\Streamer\Adapters\LocalStreamerAdapter;
 use App\Services\Streamer\Adapters\PodcastStreamerAdapter;
+use App\Services\Streamer\Adapters\PreviewStreamerAdapter;
 use App\Services\Streamer\Adapters\S3CompatibleStreamerAdapter;
 use App\Services\Streamer\Adapters\SftpStreamerAdapter;
 use App\Services\Streamer\Adapters\StreamerAdapter;
@@ -31,6 +32,10 @@ class Streamer
 
         if ($this->song->isEpisode()) {
             return app(PodcastStreamerAdapter::class);
+        }
+
+        if ($this->config?->previewSeconds) {
+            return app(PreviewStreamerAdapter::class);
         }
 
         if ($this->config?->transcode || self::shouldTranscode($this->song)) {

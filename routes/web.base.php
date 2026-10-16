@@ -12,6 +12,7 @@ use App\Http\Controllers\PlayController;
 use App\Http\Controllers\RemoteManifestController;
 use App\Http\Controllers\SSO\GoogleCallbackController;
 use App\Http\Controllers\SSO\OpenIDConnectCallbackController;
+use App\Http\Controllers\Store\PayPalReturnController;
 use App\Http\Controllers\StreamEmbedController;
 use App\Http\Controllers\StreamRadioController;
 use App\Http\Controllers\ViewSongOnITunesController;
@@ -39,6 +40,10 @@ Route::middleware('web')->group(static function (): void {
     Route::get('manifest-remote.json', RemoteManifestController::class)->name('manifest.remote');
 
     Route::get('lastfm/callback', [LastfmController::class, 'callback'])->name('lastfm.callback');
+
+    Route::get('store/paypal/return/{order}', PayPalReturnController::class)->middleware('throttle:30,1')->name(
+        'store.paypal.return',
+    );
 
     Route::middleware('auth')->group(static function (): void {
         if (ITunes::used()) {

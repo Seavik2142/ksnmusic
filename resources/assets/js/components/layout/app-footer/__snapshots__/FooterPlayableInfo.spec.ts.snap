@@ -1,15 +1,17 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`footerPlayableInfo.vue > renders with current playable 1`] = `
-<div data-v-e015ebf7="" class="playing song-info px-6 py-0 flex items-center content-start w-[84px] md:w-[420px] gap-5" draggable="true"><span data-v-e015ebf7="" class="cursor-pointer album-thumb block h-[55%] md:h-3/4 aspect-square rounded-full bg-cover" title="Scroll to currently playing"></span>
-  <div data-v-e015ebf7="" class="meta overflow-hidden hidden md:block">
-    <h3 data-v-e015ebf7="" class="title overflow-hidden whitespace-nowrap"><span data-v-e015ebf7="" class="block truncate">Fahrstuhl zum Mond</span></h3><a data-v-e015ebf7="" href="/#/artists/led-zeppelin" class="artist overflow-hidden whitespace-nowrap block text-[0.9rem]"><span data-v-e015ebf7="" class="block truncate">Led Zeppelin</span></a>
+<div data-v-e015ebf7="" class="playing song-info px-4 py-0 flex items-center content-start w-[84px] md:w-[420px] gap-3.5" draggable="true"><span data-v-e015ebf7="" class="cursor-pointer album-thumb animate-pop-in relative block h-[55%] md:h-14 aspect-square rounded-md bg-cover bg-center shrink-0" title="Scroll to currently playing"></span>
+  <div data-v-e015ebf7="" class="meta animate-rise overflow-hidden hidden md:flex flex-col gap-0.5">
+    <h3 data-v-e015ebf7="" class="title flex items-center gap-2 overflow-hidden whitespace-nowrap font-medium text-k-fg"><span data-v-e015ebf7="" class="block truncate">Fahrstuhl zum Mond</span>
+      <div data-v-86f39f14="" data-v-e015ebf7="" class="audio-equalizer flex items-end justify-center gap-[2.5px] select-none pointer-events-none size-sm animated shrink-0" role="presentation" aria-hidden="true"><span data-v-86f39f14="" class="eq-bar"></span><span data-v-86f39f14="" class="eq-bar"></span><span data-v-86f39f14="" class="eq-bar"></span></div>
+    </h3><a data-v-e015ebf7="" href="/#/artists/led-zeppelin" class="artist overflow-hidden whitespace-nowrap block text-[0.9rem] text-k-fg-60"><span data-v-e015ebf7="" class="block truncate">Led Zeppelin</span></a>
   </div>
 </div>
 `;
 
 exports[`footerPlayableInfo.vue > renders with no current playable 1`] = `
-<div data-v-e015ebf7="" class="song-info px-6 py-0 flex items-center content-start w-[84px] md:w-[420px] gap-5" draggable="false"><span data-v-e015ebf7="" class="album-thumb block h-[55%] md:h-3/4 aspect-square rounded-full bg-cover"></span>
+<div data-v-e015ebf7="" class="song-info px-4 py-0 flex items-center content-start w-[84px] md:w-[420px] gap-3.5" draggable="false"><span data-v-e015ebf7="" class="album-thumb animate-pop-in relative block h-[55%] md:h-14 aspect-square rounded-md bg-cover bg-center shrink-0"></span>
   <!--v-if-->
 </div>
 `;

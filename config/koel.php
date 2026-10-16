@@ -39,6 +39,12 @@ return [
      |
      */
 
+    'store' => [
+        'currency' => 'USD',
+        'commission_percent' => (int) env('STORE_COMMISSION_PERCENT', 20),
+        'preview_seconds' => (int) env('STORE_PREVIEW_SECONDS', 30),
+    ],
+
     'streaming' => [
         'bitrate' => env('TRANSCODE_BIT_RATE') ?: env('OUTPUT_BIT_RATE', 128),
         'aac_fast' => env('TRANSCODE_AAC_FAST', true),

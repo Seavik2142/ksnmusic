@@ -15,6 +15,26 @@ const { playables } = toRefs(props)
 
 <style lang="postcss" scoped>
 @reference '@css/app.pcss';
+ol > :deep(*) {
+  @apply animate-rise;
+}
+
+ol > :deep(:nth-child(2)) {
+  --stagger: 1;
+}
+ol > :deep(:nth-child(3)) {
+  --stagger: 2;
+}
+ol > :deep(:nth-child(4)) {
+  --stagger: 3;
+}
+ol > :deep(:nth-child(5)) {
+  --stagger: 4;
+}
+ol > :deep(:nth-child(n + 6)) {
+  --stagger: 5;
+}
+
 /* 1-col: divider above every item except the first */
 ol > :deep(:nth-child(n + 2)) {
   @apply border-t border-k-fg-5;

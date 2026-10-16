@@ -25,8 +25,15 @@ class Transcoder
         private readonly bool $aacFast = true,
     ) {}
 
-    public function transcode(string $source, string $destination, int $bitRate): void
-    {
+    /**
+     * @param ?float $maxDurationSeconds If set, only this many seconds from the start are transcoded.
+     */
+    public function transcode(
+        string $source,
+        string $destination,
+        int $bitRate,
+        ?float $maxDurationSeconds = null,
+    ): void {
         setlocale(LC_CTYPE, 'en_US.UTF-8'); // #1481 special chars might be stripped otherwise
 
         File::ensureDirectoryExists(dirname($destination));
@@ -38,6 +45,7 @@ class Transcoder
             '-nostdin',
             '-i',
             $source,
+            ...($maxDurationSeconds ? ['-t', (string) $maxDurationSeconds] : []),
             '-vn', // Strip video
             '-af',
             'aformat=sample_rates=' . self::SAMPLE_RATES_UP_TO_48_KHZ,

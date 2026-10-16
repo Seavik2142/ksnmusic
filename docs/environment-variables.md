@@ -117,6 +117,23 @@ Required when `STORAGE_DRIVER=webdav`.
 |---|---|---|
 | `ALLOW_DOWNLOAD` | Whether to allow song downloading. | `true` |
 
+## Store
+
+Sell songs and albums. Listeners who haven't bought a paid song hear a preview. Payment providers are enabled by filling in their credentials; PayWay's KHQR option accepts ABA Pay and any Bakong member bank.
+
+| Variable | Description | Default |
+|---|---|---|
+| `STORE_COMMISSION_PERCENT` | The platform's default share of each sale, in percent. Admins can override it in Settings. | `20` |
+| `STORE_PREVIEW_SECONDS` | How many seconds of a paid song a listener who hasn't bought it can hear (never more than half the song). | `30` |
+| `PAYPAL_CLIENT_ID` | Your PayPal REST app's client ID. | |
+| `PAYPAL_CLIENT_SECRET` | Your PayPal REST app's secret. | |
+| `PAYPAL_SANDBOX` | Whether to use PayPal's sandbox instead of live payments. | `true` |
+| `PAYWAY_MERCHANT_ID` | Your ABA PayWay merchant ID. | |
+| `PAYWAY_API_KEY` | Your ABA PayWay API key, used to sign requests. | |
+| `PAYWAY_SANDBOX` | Whether to use PayWay's sandbox instead of live payments. | `true` |
+| `PAYWAY_KHQR_PAYMENT_OPTION` | The PayWay `payment_option` value for KHQR payments. | `abapay_khqr` |
+| `PAYWAY_CARD_PAYMENT_OPTION` | The PayWay `payment_option` value for card payments. | `cards` |
+
 ## Service Integrations
 
 Also see [Service Integrations](service-integrations) for detailed setup instructions.

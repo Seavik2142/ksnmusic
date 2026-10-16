@@ -26,7 +26,7 @@ class ArtistStudioController extends Controller
         $artistId = $request->query('artist_id');
         $artist = $this->artistStudioService->resolveArtistForUser($user, is_string($artistId) ? $artistId : null);
 
-        abort_unless($artist, 404, 'No artist profile found for this account.');
+        abort_unless($artist !== null, 404, 'No artist profile found for this account.');
 
         return response()->json($this->artistStudioService->getOverview($artist));
     }

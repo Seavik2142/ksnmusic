@@ -21,6 +21,7 @@ export interface Modals {
   KOEL_PLUS: never
   PLAYLIST_COLLABORATION: { playlist: Playlist }
   CREATE_THEME_FORM: never
+  CHECKOUT: { items: Array<Song | Album>; headline?: string }
   MOVE_SONG_TO_ALBUM_FORM: { songs: Song[] }
   REORDER_HOME_BLOCKS: { blocks: { id: string; label: string }[] }
 }

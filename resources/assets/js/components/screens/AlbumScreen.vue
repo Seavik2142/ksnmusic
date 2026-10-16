@@ -33,6 +33,8 @@
 
         <template #controls>
           <div class="flex items-center gap-2">
+            <BuyButton v-if="albumForSale" :item="album" size="large" />
+
             <SongListControls
               v-if="songs.length"
               :config
@@ -154,6 +156,7 @@ import ScreenTabs from '@/components/ui/ArtistAlbumScreenTabs.vue'
 import ScreenBase from '@/components/screens/ScreenBase.vue'
 import GridListView from '@/components/ui/GridListView.vue'
 import Btn from '@/components/ui/form/Btn.vue'
+import BuyButton from '@/components/store/BuyButton.vue'
 
 const validTabs = ['songs', 'other-albums', 'information'] as const
 type Tab = (typeof validTabs)[number]
@@ -180,6 +183,10 @@ const songs = ref<Song[]>([])
 const loading = ref(false)
 const otherAlbums = ref<Album[] | undefined>()
 const info = ref<ArtistInfo | undefined>()
+
+const albumForSale = computed(
+  () => Boolean(album.value?.price_cents) && !album.value?.is_purchased && !album.value?.permissions.set_price,
+)
 
 const allowEdit = computed(() => {
   if (!album.value) {

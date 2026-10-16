@@ -24,6 +24,12 @@ blockquote {
   @apply text-balance;
 }
 
+h1,
+h2 {
+  font-family: var(--font-family-display);
+  letter-spacing: -0.02em;
+}
+
 *::marker {
   @apply hidden!;
 }
@@ -41,8 +47,11 @@ body,
 html {
   font-family: var(--font-family);
   font-size: var(--font-size);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 
-  @apply h-screen text-k-fg font-light leading-6 overflow-hidden;
+  @apply h-screen text-k-fg font-normal leading-normal overflow-hidden;
 }
 
 body::before {
@@ -68,7 +77,7 @@ textarea,
 .btn {
   font-family: var(--font-family);
 
-  @apply appearance-none border-0 outline-0 text-base font-light;
+  @apply appearance-none border-0 outline-0 text-base font-normal;
 
   &:required,
   &:invalid {
@@ -100,5 +109,16 @@ button,
 
   &::selection {
     @apply bg-k-highlight text-k-highlight-fg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
   }
 }

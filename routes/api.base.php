@@ -85,6 +85,11 @@ use App\Http\Controllers\API\Settings\UpdateBrandingController;
 use App\Http\Controllers\API\Settings\UpdateMediaPathController;
 use App\Http\Controllers\API\SongController;
 use App\Http\Controllers\API\SongSearchController;
+use App\Http\Controllers\API\Store\CheckoutController;
+use App\Http\Controllers\API\Store\FetchPurchasesController;
+use App\Http\Controllers\API\Store\ShowOrderController;
+use App\Http\Controllers\API\Store\UpdateAlbumPriceController;
+use App\Http\Controllers\API\Store\UpdateSongPriceController;
 use App\Http\Controllers\API\ThemeController;
 use App\Http\Controllers\API\ToggleLikeSongController;
 use App\Http\Controllers\API\UnlikeMultipleSongsController;
@@ -100,6 +105,7 @@ use App\Http\Controllers\API\Upload\PresignUploadController;
 use App\Http\Controllers\API\Upload\UploadSongController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\UserInvitationController;
+use App\Http\Controllers\Store\PayWayCallbackController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
@@ -132,6 +138,10 @@ Route::prefix('api')
                 Route::post('embed-options', [EmbedOptionsController::class, 'encrypt']);
             });
         });
+
+        Route::post('store/payway/callback', PayWayCallbackController::class)
+            ->middleware('throttle:60,1')
+            ->name('store.payway.callback');
 
         // @mago-ignore lint:halstead (a flat list of route definitions, not logic to break up)
         Route::middleware('auth')->group(static function (): void {
@@ -211,6 +221,13 @@ Route::prefix('api')
 
             Route::put('songs/{song}/rating', RateSongController::class)->where(['song' => Uuid::REGEX]);
             Route::put('albums/{album}/rating', RateAlbumController::class);
+
+            Route::put('songs/{song}/price', UpdateSongPriceController::class)->where(['song' => Uuid::REGEX]);
+            Route::put('albums/{album}/price', UpdateAlbumPriceController::class);
+            Route::post('store/orders', CheckoutController::class)->middleware('throttle:20,1');
+            Route::get('store/orders/{order}', ShowOrderController::class);
+            Route::get('store/purchases', FetchPurchasesController::class);
+
             Route::put('artists/{artist}/rating', RateArtistController::class);
             Route::put('podcasts/{podcast}/rating', RatePodcastController::class)->where([
                 'podcast' => Uuid::REGEX,

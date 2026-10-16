@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Subsonic;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subsonic\StreamRequest;
 use App\Repositories\SongRepository;
+use App\Services\Store\EntitlementService;
 use App\Services\Streamer\Streamer;
 use App\Values\RequestedStreamingConfig;
 
@@ -12,6 +13,7 @@ class StreamController extends Controller
 {
     public function __construct(
         private readonly SongRepository $songRepository,
+        private readonly EntitlementService $entitlementService,
     ) {}
 
     public function __invoke(StreamRequest $request)
@@ -26,6 +28,7 @@ class StreamController extends Controller
             transcode: $maxBitRate !== null,
             bitRate: $maxBitRate,
             startTime: $startTime,
+            previewSeconds: $this->entitlementService->previewSecondsFor($request->user(), $song),
         )))->stream();
     }
 }

@@ -33,6 +33,8 @@ export default {
         'k-bg-95': 'var(--k-bg-95)',
         'k-bg-context-menu': 'var(--color-bg)',
         'k-bg-input': 'var(--k-bg-input)',
+        'k-surface': 'var(--color-surface)',
+        'k-surface-raised': 'var(--color-surface-raised)',
         'k-highlight': 'var(--color-highlight)',
         'k-highlight-fg': 'var(--color-highlight-fg)',
         'k-success': 'var(--color-success)',
@@ -47,8 +49,26 @@ export default {
         'k-sidebar-width': 'var(--sidebar-width)',
         'k-side-sheet-width': 'var(--side-sheet-width)',
       },
+      fontFamily: {
+        sans: ['Outfit', 'Inter', 'Kantumruy Pro', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['Outfit', 'Inter', 'sans-serif'],
+        khmer: ['Kantumruy Pro', 'Siemreap', 'sans-serif'],
+      },
       animation: {
         'vinyl-spin': 'spin 30s linear infinite',
+        'subtle-pulse': 'pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'fade-in': 'fadeIn 0.25s ease-out forwards',
+        'slide-up': 'slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(8px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
       },
     },
     variants: {
